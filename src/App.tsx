@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import FetchForecast from './components/api/FetchForecast';
+import forecast from './components/api/forecast';
 function App() {
-  FetchForecast()
+  forecast()
   return (
     <div>
 
