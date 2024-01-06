@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import FetchForecast from './components/api/FetchForecast';
 function App() {
+  FetchForecast()
   return (
     <div className="App">
 
