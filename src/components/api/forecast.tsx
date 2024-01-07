@@ -1,5 +1,25 @@
 import { fetchWeatherApi } from 'openmeteo';
-export default async () => {
+interface weatherDataTyp {
+	current : {
+		apparentTemperature: number;
+		isDay:number;
+		precipitation:number;
+		rain: number;
+		showers:number;
+		snowfall:number;
+		temperature2m:number;
+		time: Date;
+		windDirection10m:number;
+		windSpeed10m:number;
+	}
+	hourly : {
+		precipitation: Float32Array;
+		precipitationProbability:Float32Array;
+		temperature2m:Float32Array;
+		time: Date[];
+	}
+}
+export default async function () :Promise<weatherDataTyp> {
 	const params = {
 		"latitude": 48.189,
 		"longitude": 10.0209,
@@ -51,7 +71,7 @@ export default async () => {
 		},
 	
 	};
-	
+	//change time to better format
 	// `weatherData` now contains a simple structure with arrays for datetime and weather data
 	for (let i = 0; i < weatherData.hourly.time.length; i++) {
 		console.log("Hourly",
@@ -65,6 +85,7 @@ export default async () => {
 		);
 	
 	}
+	console.log(weatherData)
 	console.log('Current','Time',weatherData.current.time,' Gefühlte Temperature',weatherData.current.apparentTemperature,'Temperatur',weatherData.current.temperature2m,'Tag ? ',weatherData.current.isDay,'Niederschlag',weatherData.current.precipitation,'Regen',weatherData.current.rain,'Schnee',weatherData.current.snowfall)
-
+	return weatherData
 }
