@@ -1,43 +1,9 @@
 import { AreaChart, Card, Title } from "@tremor/react";
-import React from "react";
-const chartdata3 = [
-  {
-    date: "Jan 23",
-    "Running": 167,
-  },
-  {
-    date: "Feb 23",
-    "Running": 125,
-  },
-  {
-    date: "Mar 23",
-    "Running": 156,
-  },
-  {
-    date: "Apr 23",
-    "Running": 165,
-  },
-  {
-    date: "May 23",
-    "Running": 153,
-  },
-  {
-    date: "Jun 23",
-    "Running": 124,
-  },
-  {
-    date: "Jul 23",
-    "Running": 164,
-  },
-  {
-    date: "Aug 23",
-    "Running": 123,
-  },
-  {
-    date: "Sep 23",
-    "Running": 132,
-  },
-];
+import React, { useState } from "react";
+import forecast from "../api/forecast";
+
+
+
 
 const customTooltip = ({ payload, active }) => {
   if (!active || !payload) return null;
@@ -56,14 +22,53 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export const AreaChartCustomTooltip = () => {
+export default () => {
+    
+    const chartdata = [
+        {
+          date: "Jan 23",
+          "Running": 0,
+        },
+        {
+          date: "Feb 23",
+          "Running": 125,
+        },
+        {
+          date: "Mar 23",
+          "Running": 156,
+        },
+        {
+          date: "Apr 23",
+          "Running": 165,
+        },
+        {
+          date: "May 23",
+          "Running": 153,
+        },
+        {
+          date: "Jun 23",
+          "Running": 124,
+        },
+        {
+          date: "Jul 23",
+          "Running": 164,
+        },
+        {
+          date: "Aug 23",
+          "Running": 123,
+        },
+        {
+          date: "Sep 23",
+          "Running": 132,
+        },
+      ];
   return (
     <>
       <Card>
-        <Title>Average BPM</Title>
+        <Title>Temperature</Title>
         <AreaChart
           className="h-72 mt-4"
-          data={chartdata3}
+          data={chartdata}
           index="date"
           categories={["Running"]}
           colors={["blue"]}
