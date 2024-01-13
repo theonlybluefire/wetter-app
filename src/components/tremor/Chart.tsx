@@ -23,13 +23,11 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default () => {
-  const [content, setContent] = useState(true);
-
+export default async () => {
     //get data
     const dates = []
-
-     var chartdata = [
+    var chartdata = useRef<any>();
+     chartdata.current = [
       {
         date: 0,
         "Running": 0,
@@ -67,30 +65,34 @@ export default () => {
         "Running": 0,
       },
     ];
-    forecast().then((data) => {
-      for(let i = 0;i<chartdata.length;i++) {
-        chartdata[i].date = data.hourly.time[i];
-        console.log(chartdata);
-        chartdata[i].Running = data.hourly.temperature2m[i];
-      }
-      
-    })
+    
+    async function fetchData() {
+      forecast().then((data) => {
+        for(let i = 0;i<9;i++) {
+          chartdata.current[i].date = data.hourly.time[i];
+          chartdata.current[i].Running = data.hourly.temperature2m[i];
+        }
+      })
+    }
+    fetchData();
+    await fetchData();
+    
+
     return (
-      {content ? <div>Loading...</div> : <div>
       <>
-          <Card>
-            <Title>Temperature</Title>
-            <AreaChart
-              className="h-72 mt-4"
-              data={chartdata}
-              index="date"
-              categories={["Running"]}
-              colors={["blue"]}
-              yAxisWidth={30}
-              customTooltip={customTooltip}
-              showAnimation={true}
-            />
-          </Card>
-        </></div>}
+      <Card>
+        <Title>Temperature</Title>
+        <AreaChart
+          className="h-72 mt-4"
+          data={chartdata.current}
+          index="date"
+          categories={["Running"]}
+          colors={["blue"]}
+          yAxisWidth={30}
+          customTooltip={customTooltip}
+          showAnimation={true}
+        />
+      </Card>
+    </>
     )
 };
