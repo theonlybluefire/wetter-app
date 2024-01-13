@@ -73,6 +73,7 @@ export default async function () :Promise<weatherDataTyp> {
 	};
 	//change time to better format
 	// `weatherData` now contains a simple structure with arrays for datetime and weather data
+	/*
 	for (let i = 0; i < weatherData.hourly.time.length; i++) {
 		console.log("Hourly",
 			weatherData.hourly.time[i],//.toISOString()
@@ -85,7 +86,8 @@ export default async function () :Promise<weatherDataTyp> {
 		);
 	
 	}
-	console.log(weatherData)
-	console.log('Current','Time',weatherData.current.time,' Gefühlte Temperature',weatherData.current.apparentTemperature,'Temperatur',weatherData.current.temperature2m,'Tag ? ',weatherData.current.isDay,'Niederschlag',weatherData.current.precipitation,'Regen',weatherData.current.rain,'Schnee',weatherData.current.snowfall)
+	*/
+	
+	
 	return weatherData
 }

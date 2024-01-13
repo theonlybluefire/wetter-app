@@ -1,5 +1,6 @@
 import { AreaChart, Card, Title } from "@tremor/react";
-import React, { useState } from "react";
+import React from "react";
+import { useRef, useEffect, useState } from "react";
 import forecast from "../api/forecast";
 
 
@@ -23,59 +24,73 @@ const customTooltip = ({ payload, active }) => {
 };
 
 export default () => {
-    
-    const chartdata = [
-        {
-          date: "Jan 23",
-          "Running": 0,
-        },
-        {
-          date: "Feb 23",
-          "Running": 125,
-        },
-        {
-          date: "Mar 23",
-          "Running": 156,
-        },
-        {
-          date: "Apr 23",
-          "Running": 165,
-        },
-        {
-          date: "May 23",
-          "Running": 153,
-        },
-        {
-          date: "Jun 23",
-          "Running": 124,
-        },
-        {
-          date: "Jul 23",
-          "Running": 164,
-        },
-        {
-          date: "Aug 23",
-          "Running": 123,
-        },
-        {
-          date: "Sep 23",
-          "Running": 132,
-        },
-      ];
-  return (
-    <>
-      <Card>
-        <Title>Temperature</Title>
-        <AreaChart
-          className="h-72 mt-4"
-          data={chartdata}
-          index="date"
-          categories={["Running"]}
-          colors={["blue"]}
-          yAxisWidth={30}
-          customTooltip={customTooltip}
-        />
-      </Card>
-    </>
-  );
+  const [content, setContent] = useState(true);
+
+    //get data
+    const dates = []
+
+     var chartdata = [
+      {
+        date: 0,
+        "Running": 0,
+      },
+      {
+        date: 0,
+        "Running": 0,
+      },
+      {
+        date: dates[3],
+        "Running": 0,
+      },
+      {
+        date: dates[4],
+        "Running": 0,
+      },
+      {
+        date: dates[5],
+        "Running": 0,
+      },
+      {
+        date: dates[6],
+        "Running": 0,
+      },
+      {
+        date: dates[7],
+        "Running": 0,
+      },
+      {
+        date: dates[8],
+        "Running": 0,
+      },
+      {
+        date: dates[9],
+        "Running": 0,
+      },
+    ];
+    forecast().then((data) => {
+      for(let i = 0;i<chartdata.length;i++) {
+        chartdata[i].date = data.hourly.time[i];
+        console.log(chartdata);
+        chartdata[i].Running = data.hourly.temperature2m[i];
+      }
+      
+    })
+    return (
+      {content ? <div>Loading...</div> : <div>
+      <>
+          <Card>
+            <Title>Temperature</Title>
+            <AreaChart
+              className="h-72 mt-4"
+              data={chartdata}
+              index="date"
+              categories={["Running"]}
+              colors={["blue"]}
+              yAxisWidth={30}
+              customTooltip={customTooltip}
+              showAnimation={true}
+            />
+          </Card>
+        </></div>}
+    )
 };
