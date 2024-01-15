@@ -2,6 +2,7 @@ import { AreaChart, Card, Title } from "@tremor/react";
 import React from "react";
 import { useRef, useEffect, useState } from "react";
 import forecast from "../api/forecast";
+import { ObjectType } from "typescript";
 
 
 
@@ -23,11 +24,10 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default async () => {
+export default () => {
     //get data
-    const dates = []
-    var chartdata = useRef<any>();
-     chartdata.current = [
+    var chartdata = useState<Object>();
+     chartdata = [
       {
         date: 0,
         "Running": 0,
@@ -37,45 +37,44 @@ export default async () => {
         "Running": 0,
       },
       {
-        date: dates[3],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[4],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[5],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[6],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[7],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[8],
+        date: 0,
         "Running": 0,
       },
       {
-        date: dates[9],
+        date: 0,
         "Running": 0,
       },
     ];
     
-    async function fetchData() {
+    function fetchData() {
       forecast().then((data) => {
         for(let i = 0;i<9;i++) {
-          chartdata.current[i].date = data.hourly.time[i];
-          chartdata.current[i].Running = data.hourly.temperature2m[i];
+          chartdata[i].date = data.hourly.time[i];
+          chartdata[i].Running = data.hourly.temperature2m[i];
         }
       })
     }
     fetchData();
-    await fetchData();
     
 
     return (
@@ -84,7 +83,7 @@ export default async () => {
         <Title>Temperature</Title>
         <AreaChart
           className="h-72 mt-4"
-          data={chartdata.current}
+          data={chartdata}
           index="date"
           categories={["Running"]}
           colors={["blue"]}
