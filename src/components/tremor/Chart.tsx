@@ -25,58 +25,19 @@ const customTooltip = ({ payload, active }) => {
 };
 
 export default () => {
-    //get data
-    var chartdata = useState<Object>();
-     chartdata = [
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-      {
-        date: 0,
-        "Running": 0,
-      },
-    ];
-    
-    function fetchData() {
-      forecast().then((data) => {
-        for(let i = 0;i<9;i++) {
-          chartdata[i].date = data.hourly.time[i];
-          chartdata[i].Running = data.hourly.temperature2m[i];
-        }
-      })
-    }
-    fetchData();
-    
+  type Chartdata {
+    date: Date,
+    Temperature:number
+  }
+  var chartdata = useRef()
+  forecast().then(data => {
+    const tdata = data.hourly.time.map((date, index) => ({ date, "Temperature": data.hourly.temperature2m[index] }));
+    useEffect(() => {
+      chartdata.current(tdata)
+    }, [
+    ])
 
+   });
     return (
       <>
       <Card>
@@ -85,7 +46,7 @@ export default () => {
           className="h-72 mt-4"
           data={chartdata}
           index="date"
-          categories={["Running"]}
+          categories={["Temperature"]}
           colors={["blue"]}
           yAxisWidth={30}
           customTooltip={customTooltip}
