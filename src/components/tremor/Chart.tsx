@@ -25,26 +25,35 @@ const customTooltip = ({ payload, active }) => {
 };
 
 export default () => {
-  type Chartdata {
-    date: Date,
-    Temperature:number
+  const array = []
+  class newChartObject {
+    date : Date
+    Temperature:Number
+    constructor (i:number){
+      forecast().then(data => {
+        this.date = data.hourly.time[i]
+        this.Temperature = data.hourly.temperature2m[i]
+      })
+      
+    }
   }
-  var chartdata = useRef()
+/*
   forecast().then(data => {
-    const tdata = data.hourly.time.map((date, index) => ({ date, "Temperature": data.hourly.temperature2m[index] }));
-    useEffect(() => {
-      chartdata.current(tdata)
-    }, [
-    ])
-
+    const tdata:any[] = data.hourly.time.map((date, index) => ([{ date, "Temperature": data.hourly.temperature2m[index] }]));
+    console.log('Type of return : ',typeof tdata, 'Data :',tdata)
    });
+   */
+    for(let i = 0;i<20;i++) {
+      array.push(new newChartObject(i))
+      console.log(array)
+    }
     return (
       <>
       <Card>
         <Title>Temperature</Title>
         <AreaChart
           className="h-72 mt-4"
-          data={chartdata}
+          data={array}
           index="date"
           categories={["Temperature"]}
           colors={["blue"]}
