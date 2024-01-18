@@ -2,8 +2,6 @@ import { AreaChart, Card, Title } from "@tremor/react";
 import React from "react";
 import { useRef, useEffect, useState } from "react";
 import forecast from "../api/forecast";
-import { ObjectType } from "typescript";
-
 
 
 
@@ -25,14 +23,14 @@ const customTooltip = ({ payload, active }) => {
 };
 
 export default () => {
-  const array = []
+  const array:Object[] = []
   class newChartObject {
     date : Date
     Temperature:Number
     constructor (i:number){
       forecast().then(data => {
-        this.date = data.hourly.time[i]
-        this.Temperature = data.hourly.temperature2m[i]
+        this.date = data.hourly.time[i];
+        this.Temperature = Math.round(data.hourly.temperature2m[i]);
       })
       
     }
@@ -43,7 +41,7 @@ export default () => {
     console.log('Type of return : ',typeof tdata, 'Data :',tdata)
    });
    */
-    for(let i = 0;i<20;i++) {
+    for(let i = 0;i<10;i++) {
       array.push(new newChartObject(i))
       console.log(array)
     }
