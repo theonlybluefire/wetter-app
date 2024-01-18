@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import forecast from "../api/forecast";
 
 
-
 const customTooltip = ({ payload, active }) => {
   if (!active || !payload) return null;
   return (
@@ -24,7 +23,7 @@ const customTooltip = ({ payload, active }) => {
 
 export default () => {
   const array:Object[] = []
-  class newChartObject {
+  class ChartObject {
     date : Date
     Temperature:Number
     constructor (i:number){
@@ -41,8 +40,8 @@ export default () => {
     console.log('Type of return : ',typeof tdata, 'Data :',tdata)
    });
    */
-    for(let i = 0;i<10;i++) {
-      array.push(new newChartObject(i))
+    for(let i = 0;i<482;i++) {
+      array.push(new ChartObject(i))
       console.log(array)
     }
     return (
