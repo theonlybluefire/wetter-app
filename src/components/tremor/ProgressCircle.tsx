@@ -1,14 +1,15 @@
 import { Card, Flex, Text, ProgressCircle } from "@tremor/react";
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import forecast from "../api/forecast";
 export default () => { 
+    console.log('Progress Circle Func call')
     forecast().then(data => {
-       setTemp(Math.round(data.current.apparentTemperature))
-       setRain(Math.round(data.current.rain))
+       temp.current = Math.round(data.current.apparentTemperature)
+       rain.current = Math.round(data.current.rain)
       });
       
-    const [temp, setTemp] = useState(0);
-    const [rain, setRain] = useState(0);
+    var temp = useRef<number>();
+    var rain = useRef<number>()
 
     return (
             <div className="space-y-10">
@@ -21,14 +22,14 @@ export default () => {
                         SV
                       </span>
                     </ProgressCircle >
-                    <ProgressCircle value={temp} size="md" color="violet" showAnimation={true}>
+                    <ProgressCircle value={temp.current} size="md" color="violet" showAnimation={true}>
                       <span className="h-12 w-12 rounded-full bg-violet-100 flex items-center justify-center text-sm text-violet-500 font-medium">
-                        {temp}
+                        {temp.current}
                       </span>
                     </ProgressCircle>
-                    <ProgressCircle value={rain} size="md" color="fuchsia" showAnimation={true}>
+                    <ProgressCircle value={rain.current} size="md" color="fuchsia" showAnimation={true}>
                       <span className="h-12 w-12 rounded-full bg-fuchsia-100 flex items-center justify-center text-sm text-fuchsia-500 font-medium">
-                        {rain}
+                        {rain.current}
                       </span>
                     </ProgressCircle>
                   </Flex>

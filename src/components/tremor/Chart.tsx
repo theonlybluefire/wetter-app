@@ -40,10 +40,14 @@ export default () => {
     console.log('Type of return : ',typeof tdata, 'Data :',tdata)
    });
    */
+   useEffect(() => {
+    console.log('Started pushing data')
     for(let i = 0;i<482;i++) {
       array.push(new ChartObject(i))
       console.log(array)
     }
+   },[])
+
     return (
       <>
       <Card>

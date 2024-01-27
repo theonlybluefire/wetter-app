@@ -20,6 +20,8 @@ interface weatherDataTyp {
 	}
 }
 export default async function () :Promise<weatherDataTyp> {
+	console.log('API Request')
+
 	const params = {
 		"latitude": 48.189,
 		"longitude": 10.0209,
