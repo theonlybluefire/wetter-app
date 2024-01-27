@@ -1,11 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from "react"
 export default () => {
     
     return (
-        <motion.div>
-            
-        </motion.div>
+        <div></div>
     ) 
 
 }
