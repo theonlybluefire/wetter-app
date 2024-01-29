@@ -19,8 +19,8 @@ interface weatherDataTyp {
 		time: Date[];
 	}
 }
-export default async function () :Promise<weatherDataTyp> {
-	console.log('API Request')
+export default async function (fromComponent) :Promise<weatherDataTyp> {
+	console.log('API Request from',fromComponent)
 
 	const params = {
 		"latitude": 48.189,

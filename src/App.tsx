@@ -7,9 +7,8 @@ function App() {
 
   return (
     <div>
-      <ProgressCircle/>
-      <br/>
       <Chart/>
+      <br/>
     </div>
   );
 }

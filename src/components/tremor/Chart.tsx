@@ -22,24 +22,23 @@ const customTooltip = ({ payload, active }) => {
 };
 
 export default () => {
+  var data:any = ''
+  async function loadData() {
+    forecast('Chart').then(dataOne => {
+      dataOne = data
+    })
+  }
+  loadData()
+
   const array:Object[] = []
   class ChartObject {
     date : Date
     Temperature:Number
     constructor (i:number){
-      forecast().then(data => {
-        this.date = data.hourly.time[i];
-        this.Temperature = Math.round(data.hourly.temperature2m[i]);
-      })
-      
+      this.date = data.hourly.time[i];
+      this.Temperature = Math.round(data.hourly.temperature2m[i]);
     }
   }
-/*
-  forecast().then(data => {
-    const tdata:any[] = data.hourly.time.map((date, index) => ([{ date, "Temperature": data.hourly.temperature2m[index] }]));
-    console.log('Type of return : ',typeof tdata, 'Data :',tdata)
-   });
-   */
    useEffect(() => {
     console.log('Started pushing data')
     for(let i = 0;i<482;i++) {

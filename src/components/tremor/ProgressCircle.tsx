@@ -1,16 +1,17 @@
 import { Card, Flex, Text, ProgressCircle } from "@tremor/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import forecast from "../api/forecast";
 export default () => { 
     console.log('Progress Circle Func call')
-    forecast().then(data => {
-       temp.current = Math.round(data.current.apparentTemperature)
-       rain.current = Math.round(data.current.rain)
-      });
-      
-    var temp = useRef<number>();
-    var rain = useRef<number>()
+    useEffect(() => {
+      forecast('ProgressCircle').then(data => {
+        setTemp(Math.round(data.current.apparentTemperature))
+        setRain(Math.round(data.current.rain))
+       }); 
+    },[])
 
+    const [temp, setTemp] = useState<number>()
+    const [rain, setRain] = useState<number>()
     return (
             <div className="space-y-10">
               <div className="space-y-3">
@@ -22,14 +23,14 @@ export default () => {
                         SV
                       </span>
                     </ProgressCircle >
-                    <ProgressCircle value={temp.current} size="md" color="violet" showAnimation={true}>
+                    <ProgressCircle value={temp} size="md" color="violet" showAnimation={true}>
                       <span className="h-12 w-12 rounded-full bg-violet-100 flex items-center justify-center text-sm text-violet-500 font-medium">
-                        {temp.current}
+                        {temp}
                       </span>
                     </ProgressCircle>
-                    <ProgressCircle value={rain.current} size="md" color="fuchsia" showAnimation={true}>
+                    <ProgressCircle value={rain} size="md" color="fuchsia" showAnimation={true}>
                       <span className="h-12 w-12 rounded-full bg-fuchsia-100 flex items-center justify-center text-sm text-fuchsia-500 font-medium">
-                        {rain.current}
+                        {rain}
                       </span>
                     </ProgressCircle>
                   </Flex>
