@@ -21,15 +21,8 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default () => {
-  var data:any = ''
-  async function loadData() {
-    forecast('Chart').then(dataOne => {
-      dataOne = data
-    })
-  }
-  loadData()
-
+export default (data) => {
+  console.log('Got data',data)
   const array:Object[] = []
   class ChartObject {
     date : Date

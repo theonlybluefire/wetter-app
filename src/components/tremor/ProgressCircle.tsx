@@ -1,13 +1,11 @@
 import { Card, Flex, Text, ProgressCircle } from "@tremor/react";
 import React, { useEffect, useRef, useState } from "react";
-import forecast from "../api/forecast";
-export default () => { 
+
+export default (data) => { 
     console.log('Progress Circle Func call')
     useEffect(() => {
-      forecast('ProgressCircle').then(data => {
         setTemp(Math.round(data.current.apparentTemperature))
         setRain(Math.round(data.current.rain))
-       }); 
     },[])
 
     const [temp, setTemp] = useState<number>()
