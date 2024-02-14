@@ -3,7 +3,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import React from "react"
 export default () => {
     const forecastQuery = useQuery({
-        queryFn: () => {fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m')},
+        queryFn: () =>
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m').then((res) =>
+          res.json(),
+        ),
         queryKey: ['forecastData']
     })
     if(forecastQuery.isLoading) {
