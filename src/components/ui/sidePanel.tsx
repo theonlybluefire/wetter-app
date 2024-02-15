@@ -35,7 +35,7 @@ export default () => {
         console.log()
         return (
             <div className="background">
-                <div className="weatherDisplay">
+                <div className="weatherDisplay ">
                     {weather}
                 </div>
                 <div className="temperatureDisplay">
