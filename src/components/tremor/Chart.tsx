@@ -1,9 +1,8 @@
 import { AreaChart, Card, Title } from "@tremor/react";
 import React from "react";
 import { useRef, useEffect, useState } from "react";
-import forecast from "../api/forecast";
-
-
+import { useQuery } from "@tanstack/react-query";
+import ProcessAPIData from "../api/ProcessApiData";
 const customTooltip = ({ payload, active }) => {
   if (!active || !payload) return null;
   return (
@@ -21,40 +20,55 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default (data) => {
-  console.log('Got data',data)
+export default () => {
   const array:Object[] = []
-  class ChartObject {
-    date : Date
-    Temperature:Number
-    constructor (i:number){
-      this.date = data.hourly.time[i];
-      this.Temperature = Math.round(data.hourly.temperature2m[i]);
-    }
-  }
-   useEffect(() => {
-    console.log('Started pushing data')
-    for(let i = 0;i<482;i++) {
-      array.push(new ChartObject(i))
-      console.log(array)
-    }
-   },[])
 
-    return (
-      <>
-      <Card>
-        <Title>Temperature</Title>
-        <AreaChart
-          className="h-72 mt-4"
-          data={array}
-          index="date"
-          categories={["Temperature"]}
-          colors={["blue"]}
-          yAxisWidth={30}
-          customTooltip={customTooltip}
-          showAnimation={true}
-        />
-      </Card>
-    </>
-    )
+    const forecastQuery = useQuery({
+      queryFn: () =>
+          fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin').then((res) =>
+              res.json(),
+          ),
+      queryKey: ['forecastData']
+  })
+
+    if(forecastQuery.data ) {
+      console.log(forecastQuery.data.hourly.temperature_2m)
+      class ChartObject {
+        date : Date
+        Temperature:Number
+        constructor (i:number){
+          this.date = data.hourly.time[i];
+          this.Temperature = Math.round(data.hourly.temperature_2m[i]);
+        }
+      } 
+      const data = forecastQuery.data
+      console.log('Started pushing data')
+      for(let i = 0;i<10;i++) {
+        array.push(new ChartObject(i))
+        console.log(array)
+      }
+      return (
+        <>
+        <Card>
+          <Title>Temperature</Title>
+          <AreaChart
+            className="h-72 mt-4"
+            data={array}
+            index="date"
+            categories={["Temperature"]}
+            colors={["blue"]}
+            yAxisWidth={30}
+            customTooltip={customTooltip}
+            showAnimation={true}
+          />
+        </Card>
+      </>
+      )
+    }
+  return (
+    <div>Loading....</div>
+  )
+
+  
+
 };

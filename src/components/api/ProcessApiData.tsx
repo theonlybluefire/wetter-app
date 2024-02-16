@@ -1,4 +1,5 @@
 import { reduceEachTrailingCommentRange } from "typescript"
+import React, { useRef } from "react"
 type forecastData = {
 	current : {
 		apparentTemperature: number;
@@ -19,34 +20,35 @@ type forecastData = {
 		time: Date[];
 	}
 }
-export default function getQueryData (UnprocessedData):forecastData {
+export default function ProcessAPIData (UnprocessedData):forecastData {
     console.log('Getting Query Data')
     var data:any = {}
     if(UnprocessedData) {
+        console.log('Data there')
         const range = (start: number, stop: number, step: number) =>
 		Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
         data = {
             isLoading: false,
             error: '',
             current: {
-                time: new Date((Number(UnprocessedData.current.time()) + UnprocessedData.data.utc_offset_seconds) * 1000),
-                temperature2m: UnprocessedData.data.current.variables(0)!.value(),
-                apparentTemperature: UnprocessedData.data.current.variables(1)!.value(),
-                isDay: UnprocessedData.data.current.variables(2)!.value(),
-                precipitation: UnprocessedData.data.current.variables(3)!.value(),
-                rain: UnprocessedData.data.current.variables(4)!.value(),
-                showers: UnprocessedData.data.current.variables(5)!.value(),
-                snowfall: UnprocessedData.data.current.variables(6)!.value(),
-                windSpeed10m: UnprocessedData.data.current.variables(7)!.value(),
-                windDirection10m: UnprocessedData.data.current.variables(8)!.value(),
+                time: new Date((Number(UnprocessedData.time) + UnprocessedData.utc_offset_seconds) * 1000),
+                temperature2m: UnprocessedData.variables(0)!.value(),
+                apparentTemperature: UnprocessedData.variables(1)!.value(),
+                isDay: UnprocessedData.variables(2)!.value(),
+                precipitation: UnprocessedData.variables(3)!.value(),
+                rain: UnprocessedData.variables(4)!.value(),
+                showers: UnprocessedData.variables(5)!.value(),
+                snowfall: UnprocessedData.variables(6)!.value(),
+                windSpeed10m: UnprocessedData.variables(7)!.value(),
+                windDirection10m: UnprocessedData.variables(8)!.value(),
             },
             hourly: {
-                time: range(Number(UnprocessedData.data.hourly.time()), Number(UnprocessedData.data.hourly.timeEnd()), UnprocessedData.data.hourly.interval()).map(
+                time: range(Number(UnprocessedData.hourly.time()), Number(UnprocessedData.hourly.timeEnd()), UnprocessedData.hourly.interval()).map(
                     (t) => new Date((t + UnprocessedData.utc_offset_seconds) * 1000)
                 ),
-                temperature2m: UnprocessedData.data.hourly.variables(0)!.valuesArray()!,
-                precipitationProbability: UnprocessedData.data.hourly.variables(1)!.valuesArray()!,
-                precipitation: UnprocessedData.data.hourly.variables(2)!.valuesArray()!,
+                temperature2m: UnprocessedData.hourly.variables(0)!.valuesArray()!,
+                precipitationProbability: UnprocessedData.hourly.variables(1)!.valuesArray()!,
+                precipitation: UnprocessedData.hourly.variables(2)!.valuesArray()!,
             },
         
         };

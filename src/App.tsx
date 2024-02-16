@@ -10,7 +10,7 @@ import SidePanel from './components/ui/sidePanel';
 function App() {
   return (
     <div>
-      <SidePanel/>
+      <Chart/>
     </div>
   );
 }
