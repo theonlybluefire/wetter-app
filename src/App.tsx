@@ -10,8 +10,7 @@ import SidePanel from './components/ui/sidePanel';
 function App() {
   return (
     <div>
-      <Chart/>
-      <ProgressCircle/>
+      <Geocoding location='Wain'/>
     </div>
   );
 }

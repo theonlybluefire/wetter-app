@@ -9,14 +9,20 @@ export default () => {
         ),
     queryKey: ['forecastData']
 })
-  if(forecastQuery.data) {
-    useEffect(() => {
-      setTemp(Math.round(forecastQuery.data.current.apparent_temperature))
-      setRain(Math.round(forecastQuery.data.current.rain))
-  },[])
 
   const [temp, setTemp] = useState<number>()
   const [rain, setRain] = useState<number>()
+  useEffect(() => {
+    if(forecastQuery.data) {
+      setTemp(Math.round(forecastQuery.data.current.apparent_temperature))
+      setRain(Math.round(forecastQuery.data.current.rain))
+    }
+    },[forecastQuery])
+    if(forecastQuery.isLoading) {
+      return (
+        <div>Loading...</div>
+      )
+    }
   return (
           <div className="space-y-10">
             <div className="space-y-3">
@@ -44,9 +50,4 @@ export default () => {
           </div>
         );
   }
-  if(forecastQuery.isLoading) {
-    return (
-      <div>Loading...</div>
-    )
-  }
-}
+
