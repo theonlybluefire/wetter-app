@@ -9,15 +9,13 @@ import Geocoding from './components/api/Geocoding';
 import SidePanel from './components/ui/sidePanel';
 function App() {
   const [location, setLocation] = useState('')
-  const locationRef = useRef('')
   function handleChange (event) {
     setLocation(event.target.value)
-    locationRef.current = event.target.value
   }
   return (
     <div>
       <input onChange={handleChange} value={location}></input>
-      <Geocoding location={locationRef.current}/>
+      <Geocoding location={`${location}`}/>
     </div>
   );
 }
