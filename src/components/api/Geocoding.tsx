@@ -9,8 +9,7 @@ import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow
 
 
 export default (location) => {
-    const resultName = null
-    console.log(JSON.stringify(location))
+    console.log(location.location,typeof location, typeof location.location)
     const geocodingQuery = useQuery({
         queryFn: () =>
             fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location.location}&count=10&language=en&format=json`).then((res) =>
@@ -28,7 +27,7 @@ export default (location) => {
     const data = null
     console.log('Geocding Data',geocodingQuery.data)
     if(geocodingQuery.data) {
-        const data = []
+        let data = []
         class TableObject {
             name:string;
             region:string;
@@ -40,11 +39,21 @@ export default (location) => {
             }
         }
         console.log('Starting')
-        for(let i = 0;i<geocodingQuery.data.results.length;i++) {
-            data.push(new TableObject(i))
-            console.log('datenb',data)
+        if(geocodingQuery.data.results) {
+            for(let i = 0;i<geocodingQuery.data.results.length;i++) {
+                data.push(new TableObject(i))
+                console.log('datenb',data)
+            }
         }
-        console.log(geocodingQuery.data.results[3].admin3,'Trest Admin')
+        else {
+            data = [
+                {
+                    name:'',
+                    region:'',
+                    country:'',
+                }
+            ]
+        }
     return (
         <div className="">
         <Table className="mt-8">
