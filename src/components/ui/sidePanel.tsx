@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import forecast from "../api/forecast"
 
 export default () => {
-    const forecastQuery = useQuery({
+    const {forecastQuery} = useQuery({
         queryFn: () =>
             fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin').then((res) =>
                 res.json(),
