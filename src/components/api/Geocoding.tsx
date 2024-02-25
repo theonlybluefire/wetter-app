@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow,} from '@tremor/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 
@@ -17,6 +18,12 @@ export default (location) => {
             ),
         queryKey: ['geocodingQuery']
     })
+    const queryClient = useQueryClient();
+
+const handleRefetch = () => {
+  queryClient.invalidateQueries(['geocodingQuery']);
+};
+
     if (geocodingQuery.isLoading) {
             return <div>Loading...</div>
     }
