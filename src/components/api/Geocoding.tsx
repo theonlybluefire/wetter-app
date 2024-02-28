@@ -16,13 +16,8 @@ export default (location) => {
             fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location.location}&count=10&language=en&format=json`).then((res) =>
                 res.json(),
             ),
-        queryKey: ['geocodingQuery']
+        queryKey: ['geocodingQuery',location]
     })
-    const queryClient = useQueryClient();
-
-const handleRefetch = () => {
-  queryClient.invalidateQueries(['geocodingQuery']);
-};
 
     if (geocodingQuery.isLoading) {
             return <div>Loading...</div>
@@ -39,10 +34,14 @@ const handleRefetch = () => {
             name:string;
             region:string;
             country:string;
+            longitude:string;
+            latitude:string;
             constructor(i:number) {
                 this.name = geocodingQuery.data.results[i].name
                 this.region = geocodingQuery.data.results[i].admin3;
                 this.country = geocodingQuery.data.results[i].country_code;
+                this.longitude = geocodingQuery.data.results[i].longitude;
+                this.latitude = geocodingQuery.data.results[i].latitude
             }
         }
         console.log('Starting')
@@ -85,7 +84,11 @@ const handleRefetch = () => {
                 </TableCell>
                 <TableCell>{item.region}</TableCell>
                 <TableCell>{item.country}</TableCell>
-                <TableCell><button className="test" type="button" onClick={() => {console.log('Clicked')}}></button>sdfs</TableCell>
+                <button onClick={() => {
+                    window.localStorage.setItem('longitude',item.longitude)
+                    window.localStorage.setItem('latitude',item.latitude)
+                    console.log('set Coords to',item.longitude,item.latitude)
+                }}>Test</button>
               </TableRow>
             ))}
           </TableBody>

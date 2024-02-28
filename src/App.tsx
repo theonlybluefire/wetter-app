@@ -12,9 +12,15 @@ function App() {
   function handleChange (event) {
     setLocation(event.target.value)
   }
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
   return (
     <div>
-      <input onChange={handleChange} value={location}></input>
+      <form onSubmit={handleSubmit}>
+        <input type="text" onChange={handleChange} value={location} />
+        <button type='submit'>Submit</button>
+      </form>
       <Geocoding location={`${location}`}/>
     </div>
   );
