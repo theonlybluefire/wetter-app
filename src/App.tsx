@@ -9,11 +9,14 @@ import Geocoding from './components/api/Geocoding';
 import SidePanel from './components/ui/sidePanel';
 function App() {
   const [location, setLocation] = useState('')
+  const inputRef = useRef<string>();
   function handleChange (event) {
-    setLocation(event.target.value)
+    inputRef.current = event.target.value;
   }
   function handleSubmit(event) {
     event.preventDefault();
+    setLocation(inputRef.current)
+    console.log(event.target.value, inputRef.current, location,'Set Location')
   }
   return (
     <>
@@ -22,7 +25,7 @@ function App() {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input type="text" onChange={handleChange} value={location} />
+          <input type="text" onChange={handleChange} />
           <button type='submit'>Submit</button>
         </form>
         <Geocoding location={`${location}`}/>

@@ -4,3 +4,9 @@
 body {
   background-color: black;
 }
+.geocodingAddButton {
+  background-color: red;
+  padding: 10px !important;
+  border-radius: 5px;
+  color: "D4D4CC";
+}

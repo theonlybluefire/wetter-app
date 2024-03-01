@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow,} from '@tremor/react';
 import { useQueryClient } from '@tanstack/react-query';
-
+import { motion } from "framer-motion";
+import { Scale } from "lucide-react";
 
 
 
@@ -83,11 +84,15 @@ export default (location) => {
                 </TableCell>
                 <TableCell>{item.region}</TableCell>
                 <TableCell>{item.country}</TableCell>
-                <button onClick={() => {
+                <motion.button className="geocodingAddButton" onClick={() => {
                     window.localStorage.setItem('longitude',item.longitude)
                     window.localStorage.setItem('latitude',item.latitude)
                     console.log('set Coords to, stored in Local Storage as lontitude, latitude',item.longitude,item.latitude)
-                }}>Test</button>
+                    document.location.reload();
+                }}
+                whileHover={{scale:1.2}}
+                whileTap={{scale:0.5,backgroundColor:"green"}}
+                >add</motion.button>
               </TableRow>
             ))}
           </TableBody>
