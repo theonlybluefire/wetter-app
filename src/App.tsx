@@ -16,13 +16,18 @@ function App() {
     event.preventDefault();
   }
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleChange} value={location} />
-        <button type='submit'>Submit</button>
-      </form>
-      <Geocoding location={`${location}`}/>
-    </div>
+    <>
+      <div className='Chart Container'>
+        <Chart/>
+      </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input type="text" onChange={handleChange} value={location} />
+          <button type='submit'>Submit</button>
+        </form>
+        <Geocoding location={`${location}`}/>
+      </div>
+    </>
   );
 }
 

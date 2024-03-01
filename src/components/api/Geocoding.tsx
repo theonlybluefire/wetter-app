@@ -48,7 +48,6 @@ export default (location) => {
         if(geocodingQuery.data.results) {
             for(let i = 0;i<geocodingQuery.data.results.length;i++) {
                 data.push(new TableObject(i))
-                console.log('datenb',data)
             }
         }
         else {
@@ -87,7 +86,7 @@ export default (location) => {
                 <button onClick={() => {
                     window.localStorage.setItem('longitude',item.longitude)
                     window.localStorage.setItem('latitude',item.latitude)
-                    console.log('set Coords to',item.longitude,item.latitude)
+                    console.log('set Coords to, stored in Local Storage as lontitude, latitude',item.longitude,item.latitude)
                 }}>Test</button>
               </TableRow>
             ))}

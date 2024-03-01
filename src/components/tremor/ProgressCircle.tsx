@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 export default () => { 
   const forecastQuery = useQuery({
     queryFn: () =>
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin').then((res) =>
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${localStorage.getItem('latitude')}&longitude=${localStorage.getItem('longitude')}&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin`).then((res) =>
             res.json(),
         ),
-    queryKey: ['forecastData']
+    queryKey: ['forecastData',localStorage.getItem('latitude'),localStorage.getItem('longitude')]
 })
+
 
   const [temp, setTemp] = useState<number>()
   const [rain, setRain] = useState<number>()
