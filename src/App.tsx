@@ -7,6 +7,7 @@ import Chart from './components/tremor/Chart';
 import QueryApi from './components/api/ProcessApiData';
 import Geocoding from './components/api/Geocoding';
 import SidePanel from './components/ui/sidePanel';
+import { motion } from 'framer-motion';
 function App() {
   const [location, setLocation] = useState('')
   const inputRef = useRef<string>();
@@ -22,10 +23,11 @@ function App() {
     <>
       <div className='Chart Container'>
         <Chart/>
+        <ProgressCircle/>
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input type="text" onChange={handleChange} />
+          <motion.input type="text" onChange={handleChange} />
           <button type='submit'>Submit</button>
         </form>
         <Geocoding location={`${location}`}/>

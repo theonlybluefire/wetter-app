@@ -1,12 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
-  background-color: black;
+  background-color: #111318;
+  font-family: "Inter";
+
 }
 .geocodingAddButton {
-  background-color: red;
+  background-color: #111827;
   padding: 10px !important;
   border-radius: 5px;
   color: "D4D4CC";
+}
+input {
+  color: #D4D4CC;
+  background-color: #111827;
+  padding: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+button {
+  text-orientation: inherit;
+  color: #D4D4CC;
+  background-color: #111827;
+  padding: 10px;
+  border-radius: 10px;
+  outline : none;
 }

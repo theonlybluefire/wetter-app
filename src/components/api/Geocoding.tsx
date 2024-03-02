@@ -50,54 +50,50 @@ export default (location) => {
             for(let i = 0;i<geocodingQuery.data.results.length;i++) {
                 data.push(new TableObject(i))
             }
+            return (
+              <motion.div initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}}>
+              <Table className="mt-8">
+                <TableHead>
+                  <TableRow className="border-b border-tremor-border dark:border-dark-tremor-border">
+                    <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                      Name
+                    </TableHeaderCell>
+                    <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                      Region
+                    </TableHeaderCell>
+                    <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                      Country
+                    </TableHeaderCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((item) => (
+                    <TableRow key={item.name}>
+                      <TableCell className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                        {item.name}
+                      </TableCell>
+                      <TableCell>{item.region}</TableCell>
+                      <TableCell>{item.country}</TableCell>
+                      <motion.button className="geocodingAddButton" onClick={() => {
+                          window.localStorage.setItem('longitude',item.longitude)
+                          window.localStorage.setItem('latitude',item.latitude)
+                          console.log('set Coords to, stored in Local Storage as lontitude, latitude',item.longitude,item.latitude)
+                          document.location.reload();
+                      }}
+                      whileHover={{boxShadow: "0 0 20px #3B82F6",scale:1.1}}
+                      whileTap={{scale:0.5}}
+                      >add</motion.button>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </motion.div>
+          )
         }
         else {
-            data = [
-                {
-                    name:'',
-                    region:'',
-                    country:'',
-                }
-            ]
+          return (
+            <div className="noResults"></div>
+          )
         }
-    return (
-        <div className="">
-        <Table className="mt-8">
-          <TableHead>
-            <TableRow className="border-b border-tremor-border dark:border-dark-tremor-border">
-              <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                Name
-              </TableHeaderCell>
-              <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                Region
-              </TableHeaderCell>
-              <TableHeaderCell className="text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                Country
-              </TableHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.name}>
-                <TableCell className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                  {item.name}
-                </TableCell>
-                <TableCell>{item.region}</TableCell>
-                <TableCell>{item.country}</TableCell>
-                <motion.button className="geocodingAddButton" onClick={() => {
-                    window.localStorage.setItem('longitude',item.longitude)
-                    window.localStorage.setItem('latitude',item.latitude)
-                    console.log('set Coords to, stored in Local Storage as lontitude, latitude',item.longitude,item.latitude)
-                    document.location.reload();
-                }}
-                whileHover={{scale:1.2}}
-                whileTap={{scale:0.5,backgroundColor:"green"}}
-                >add</motion.button>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    )
     }
 }
