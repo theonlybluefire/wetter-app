@@ -1,17 +1,12 @@
-import React, { useState } from "react"
+import React from "react";
 import { useQuery } from "@tanstack/react-query"
 import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow,} from '@tremor/react';
-import { useQueryClient } from '@tanstack/react-query';
 import { motion } from "framer-motion";
-import { Scale } from "lucide-react";
 
+export default (location) => { //main func
+  //var def
+  const data = null
 
-
-
-
-
-export default (location) => {
-    console.log(location.location,typeof location, typeof location.location)
     const geocodingQuery = useQuery({
         queryFn: () =>
             fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location.location}&count=10&language=en&format=json`).then((res) =>
@@ -27,7 +22,7 @@ export default (location) => {
         return <div>geocodingQuery.error</div>
         }
 
-    const data = null
+
     console.log('Geocding Data',geocodingQuery.data)
     if(geocodingQuery.data) {
         let data = []

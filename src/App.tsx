@@ -1,35 +1,28 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
-import './App.css';
-import forecast from './components/api/forecast';
-import ProgressCircle from './components/tremor/ProgressCircle';
-import Chart from './components/tremor/Chart';
-import QueryApi from './components/api/ProcessApiData';
-import Geocoding from './components/api/Geocoding';
-import SidePanel from './components/ui/sidePanel';
+import React, { useState,useRef } from 'react';
 import { motion } from 'framer-motion';
+import './App.css';
+//components
+import ProgressCircle from './components/ProgressCircle';
+import Chart from './components/Chart';
+import Geocoding from './components/Geocoding';
+
 function App() {
+  //var definition
   const [location, setLocation] = useState('')
   const inputRef = useRef<string>();
-  function handleChange (event) {
-    inputRef.current = event.target.value;
-  }
-  function handleSubmit(event) {
-    event.preventDefault();
-    setLocation(inputRef.current)
-    console.log(event.target.value, inputRef.current, location,'Set Location')
-  }
+
   return (
     <>
-      <div className='Chart Container'>
-        <Chart/>
-        <ProgressCircle/>
-      </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <motion.input type="text" onChange={handleChange} />
-          <button type='submit'>Submit</button>
-        </form>
+      <Chart/>
+      <ProgressCircle/>
+      <div className='geocodingContainer'> 
+         <form onSubmit={(event) => {
+              event.preventDefault();
+              setLocation(inputRef.current)
+          }}>
+            <motion.input type="text" onChange={(event) => {inputRef.current = event.target.value;}} />
+            <button type='submit'>Submit</button>
+          </form>
         <Geocoding location={`${location}`}/>
       </div>
     </>

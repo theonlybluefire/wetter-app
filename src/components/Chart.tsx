@@ -1,8 +1,7 @@
 import { AreaChart, Card, Title } from "@tremor/react";
 import React from "react";
-import { useRef, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import ProcessAPIData from "../api/ProcessApiData";
+
 const customTooltip = ({ payload, active }) => {
   if (!active || !payload) return null;
   return (
@@ -20,7 +19,7 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default () => {
+export default () => { //
   const array:Object[] = []
 
     const forecastQuery = useQuery({
