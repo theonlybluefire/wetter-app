@@ -30,8 +30,9 @@ input:focus {
 button {
   text-orientation: inherit;
   color: #D4D4CC;
-  background-color: #111827;
+  background-color: #111827 !important;
   padding: 10px;
+  margin: 20px;
   border-radius: 10px;
   outline : none;
 }

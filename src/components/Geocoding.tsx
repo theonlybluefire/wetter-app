@@ -4,10 +4,8 @@ import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow
 import { motion } from "framer-motion";
 
 export default (location) => { //main func
-  //var def
-  const data = null
-
-    const geocodingQuery = useQuery({
+  //geocoding Query
+  const geocodingQuery = useQuery({
         queryFn: () =>
             fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location.location}&count=10&language=en&format=json`).then((res) =>
                 res.json(),
@@ -15,35 +13,31 @@ export default (location) => { //main func
         queryKey: ['geocodingQuery',location]
     })
 
-    if (geocodingQuery.isLoading) {
+    if (geocodingQuery.isLoading) { // loading case
             return <div>Loading...</div>
     }
-    if (geocodingQuery.error) {
+    if (geocodingQuery.error) { //error case
         return <div>geocodingQuery.error</div>
         }
-
-
-    console.log('Geocding Data',geocodingQuery.data)
-    if(geocodingQuery.data) {
-        let data = []
-        class TableObject {
-            name:string;
-            region:string;
-            country:string;
-            longitude:string;
-            latitude:string;
-            constructor(i:number) {
-                this.name = geocodingQuery.data.results[i].name
-                this.region = geocodingQuery.data.results[i].admin3;
-                this.country = geocodingQuery.data.results[i].country_code;
-                this.longitude = geocodingQuery.data.results[i].longitude;
-                this.latitude = geocodingQuery.data.results[i].latitude
-            }
+    if(geocodingQuery.data) { //data case
+      let data = [] 
+      class TableObject {
+        name:string;
+        region:string;
+        country:string;
+        longitude:string;
+        latitude:string;
+        constructor(i:number) {
+          this.name = geocodingQuery.data.results[i].name
+          this.region = geocodingQuery.data.results[i].admin3;
+          this.country = geocodingQuery.data.results[i].country_code;
+           this.longitude = geocodingQuery.data.results[i].longitude;
+           this.latitude = geocodingQuery.data.results[i].latitude
+          }
         }
-        console.log('Starting')
-        if(geocodingQuery.data.results) {
+        if(geocodingQuery.data.results) { //results case inside data case
             for(let i = 0;i<geocodingQuery.data.results.length;i++) {
-                data.push(new TableObject(i))
+              data.push(new TableObject(i)) //pushting data from Query to data array
             }
             return (
               <motion.div initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}}>
@@ -62,20 +56,20 @@ export default (location) => { //main func
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.map((item) => (
+                  {data.map((item) => ( //map over data with each cell names 'item'
                     <TableRow key={item.name}>
                       <TableCell className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
                         {item.name}
                       </TableCell>
                       <TableCell>{item.region}</TableCell>
                       <TableCell>{item.country}</TableCell>
-                      <motion.button className="geocodingAddButton" onClick={() => {
+                      <motion.button className="geocodingAddButton" onClick={() => { //onClick Event
                           window.localStorage.setItem('longitude',item.longitude)
                           window.localStorage.setItem('latitude',item.latitude)
-                          console.log('set Coords to, stored in Local Storage as lontitude, latitude',item.longitude,item.latitude)
-                          document.location.reload();
+                          document.location.reload(); //reload dom
                       }}
-                      whileHover={{boxShadow: "0 0 20px #3B82F6",scale:1.1}}
+                      whileHover={{boxShadow: "0 0 20px #3B82F6",
+                                  scale:1.1}}
                       whileTap={{scale:0.5}}
                       >add</motion.button>
                     </TableRow>
@@ -85,9 +79,9 @@ export default (location) => { //main func
             </motion.div>
           )
         }
-        else {
+        else { //no result case
           return (
-            <div className="noResults"></div>
+            <div className="noResults text-center bg-color">No Result</div>
           )
         }
     }
