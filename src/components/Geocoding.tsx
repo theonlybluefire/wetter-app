@@ -66,6 +66,7 @@ export default (location) => { //main func
                       <motion.button className="geocodingAddButton" onClick={() => { //onClick Event
                           window.localStorage.setItem('longitude',item.longitude)
                           window.localStorage.setItem('latitude',item.latitude)
+                          window.localStorage.setItem('location',item.name+', '+item.region)
                           document.location.reload(); //reload dom
                       }}
                       whileHover={{boxShadow: "0 0 20px #3B82F6",
