@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query"
 import {  Table,  TableBody,  TableCell,  TableHead,  TableHeaderCell,  TableRow,} from '@tremor/react';
 import { motion } from "framer-motion";
-
+import Loader from "./Loader";
 export default (location) => { //main func
   //geocoding Query
   const geocodingQuery = useQuery({
@@ -14,7 +14,10 @@ export default (location) => { //main func
     })
 
     if (geocodingQuery.isLoading) { // loading case
-            return <div>Loading...</div>
+      console.log('Loading')
+            return (
+            <Loader/>
+            )
     }
     if (geocodingQuery.error) { //error case
         return <div>geocodingQuery.error</div>
@@ -82,7 +85,11 @@ export default (location) => { //main func
         }
         else { //no result case
           return (
-            <div className="noResults text-center bg-color">No Result</div>
+            <div className="h-20">
+              <motion.p initial={{opacity:0}} animate={{opacity:1}} className="text-center font-semibold text-stone-600">no result</motion.p>
+              <Loader/>
+            </div>
+
           )
         }
     }
