@@ -1,70 +1,22 @@
 import { motion } from "framer-motion";
 import React from "react";
 
-const style = {
-    width: 20,
-    height: 20,
-    opacity: 1,
-    margin: 8,
-    borderRadius: 6,
-    display: "inline-block",
-    background: "#c81c60",
-}
-  
-const variants = {
-    start: {
-        scale: 0.5,
-        rotate: 0,
-    },
-    end: {
-        scale: 1,
-        rotate: 180,
-    },
-}
-
-export default function Loader(props) {
-    return (
-        <div>
-          <motion.div
-                    style={style}
-                    variants={variants}
-                    initial={"start"}
-                    animate={"end"}
-                    transition={{    
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      ease: "anticipate",
-                      duration: 1, 
-                      delay: 0
-                    }}
-                />
-          <motion.div
-                    style={style}
-                    variants={variants}
-                    initial={"start"}
-                    animate={"end"}
-                    transition={{    
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      ease: "anticipate",
-                      duration: 1, 
-                      delay: 0.2
-                    }}
-                />
-          <motion.div
-                    style={style}
-                    variants={variants}
-                    initial={"start"}
-                    animate={"end"}
-                    transition={{    
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      ease: "anticipate",
-                      duration: 1, 
-                      delay: 0.4
-                    }}
-                />    
-        </div>
-    )
-}
+export default () => {
+  return (
+    <div className='flex h-20 justify-center text-center'>
+      <motion.div className=" w-5 h-5 rounded-md bg-blue-700"
+      initial={{rotate:0}}
+      animate={{rotate:[180,0,-180],borderRadius:[6,10,6]}}
+      transition={{
+        duration: 1,
+        repeat: Infinity,
+        ease: "easeInOut",
+        yoyo: Infinity,
+        repeatType: "reverse"  
+      }}
+      >
+      </motion.div>
+  </div>
+  );
+};
 

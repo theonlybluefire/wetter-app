@@ -31,9 +31,12 @@ export default () => {//main func
       )
     }
   return ( 
-    <div className="grid place-items-center bg-blue-700 w-1/3 h-20 rounded-3xl">
-      <h1>{temp}</h1>
+    <div className="text-right">
+      <div className="grid items-center text-center bg-blue-700 w-1/3 h-20 rounded-3xl">
+        <h1>{temp}</h1>
+      </div>
     </div>
+
   );
 }
 
