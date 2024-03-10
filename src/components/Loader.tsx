@@ -1,34 +1,70 @@
 import { motion } from "framer-motion";
-import { LeafyGreen } from "lucide-react";
 import React from "react";
 
-export default () => {
-  return (
-    <div className='flex h-20 justify-center text-center'>
-      <motion.div
-        className="w-21 h-21 relative bg-blue-700"
-        initial={{ scale: 0}}
-        animate={{ scale: 1}}
-        transition={{
-          duration: 1,
-          repeat: Infinity,
-          ease: "linear",
-          delay: 1,
-        }}
-      >
-        <motion.div
-          className="absolute left-1/2 bottom-0 w-16 h-16 rounded-full bg-blue-700"
-          initial={{ y: 0,x:0, scale: 1 }}
-          animate={{ y: "-50%",x:"-50%", scale: 0 }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: "linear",
-            delay: 1,
-          }}
-        ></motion.div>
-      </motion.div>
-    </div>
-  );
-};
+const style = {
+    width: 20,
+    height: 20,
+    opacity: 1,
+    margin: 8,
+    borderRadius: 6,
+    display: "inline-block",
+    background: "#c81c60",
+}
+  
+const variants = {
+    start: {
+        scale: 0.5,
+        rotate: 0,
+    },
+    end: {
+        scale: 1,
+        rotate: 180,
+    },
+}
+
+export default function Loader(props) {
+    return (
+        <div>
+          <motion.div
+                    style={style}
+                    variants={variants}
+                    initial={"start"}
+                    animate={"end"}
+                    transition={{    
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                      ease: "anticipate",
+                      duration: 1, 
+                      delay: 0
+                    }}
+                />
+          <motion.div
+                    style={style}
+                    variants={variants}
+                    initial={"start"}
+                    animate={"end"}
+                    transition={{    
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                      ease: "anticipate",
+                      duration: 1, 
+                      delay: 0.2
+                    }}
+                />
+          <motion.div
+                    style={style}
+                    variants={variants}
+                    initial={"start"}
+                    animate={"end"}
+                    transition={{    
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                      ease: "anticipate",
+                      duration: 1, 
+                      delay: 0.4
+                    }}
+                />    
+        </div>
+    )
+}
 

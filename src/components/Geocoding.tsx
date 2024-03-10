@@ -72,9 +72,12 @@ export default (location) => { //main func
                           window.localStorage.setItem('location',item.name+', '+item.region)
                           document.location.reload(); //reload dom
                       }}
-                      whileHover={{boxShadow: "0 0 20px #3B82F6",
-                                  scale:1.1}}
-                      whileTap={{scale:0.5}}
+                      whileHover={{ scale: 1.2, rotate: 90 }}
+                      whileTap={{
+                        scale: 0.8,
+                        rotate: -90,
+                        borderRadius: "100%"
+                      }}
                       >add</motion.button>
                     </TableRow>
                   ))}
@@ -86,7 +89,6 @@ export default (location) => { //main func
         else { //no result case
           return (
             <div className="h-20">
-              <motion.p initial={{opacity:0}} animate={{opacity:1}} className="text-center font-semibold text-stone-600">no result</motion.p>
               <Loader/>
             </div>
 
