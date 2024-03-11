@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 export default () => {//main func
   //var def
-  const [temp, setTemp] = useState<number>()
+  const [temp, setTemp] = useState<number>();
+  const [status, setStatus] = useState<string>();
 
   const forecastQuery = useQuery({ //forecast Query
     queryFn: () =>
@@ -31,11 +32,14 @@ export default () => {//main func
       )
     }
   return ( 
-    <div className="text-right">
-      <div className="grid items-center text-center bg-blue-700 w-1/3 h-20 rounded-3xl">
-        <h1>{temp}</h1>
-      </div>
-    </div>
+<div className="flex">
+  <div className="m-auto grid items-center text-center bg-blue-700 w-1/3 h-20 rounded-3xl">
+    <h1>{temp}</h1>
+  </div>
+  <div className="m-auto grid items-center text-center bg-white w-2/3 h-20 rounded-3xl">
+    <h1>{status}</h1>
+  </div>
+</div>
 
   );
 }
