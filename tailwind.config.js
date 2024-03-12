@@ -11,6 +11,8 @@ module.exports = {
     current: "currentColor",
     extend: {
       colors: {
+        'dark-blue' : '#111827',
+        'normal-grey' : '#0E0F13',
         // light mode
         tremor: {
           brand: {

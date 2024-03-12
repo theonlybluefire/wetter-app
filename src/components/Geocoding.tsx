@@ -43,7 +43,7 @@ export default (location) => { //main func
               data.push(new TableObject(i)) //pushting data from Query to data array
             }
             return (
-              <motion.div initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}}>
+              <motion.div initial={{opacity:0,y:500}} animate={{opacity:1,y:0}} transition={{duration:0.8}}className="bg-normal-grey border-3xl absolute overflow-auto w-full h-full top-0  z-0">
               <Table className="mt-8">
                 <TableHead>
                   <TableRow className="border-b border-tremor-border dark:border-dark-tremor-border">
@@ -88,8 +88,7 @@ export default (location) => { //main func
         }
         else { //no result case
           return (
-            <div className="h-20">
-              <Loader/>
+            <div className="">
             </div>
 
           )
