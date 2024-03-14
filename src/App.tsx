@@ -29,16 +29,7 @@ function App() {
         </div>
       </div>
       <div className=''> 
-         <form onSubmit={(event) => {
-              event.preventDefault();
-              setLocation(inputRef.current)
-          }}>
-            <motion.input whileFocus={{scale:0.9}} type="text" onChange={(event) => {inputRef.current = event.target.value;}} 
-            className='fixed bottom-0 left-0 mb-2 w-2/3 z-10'
-            />
-            <motion.button whileTap={{scale:0.8}} whileHover={{scale:1.01}} type='submit' className='fixed bottom-2 right-0 mb-0 mt-0 ml-20 w-1/4 bg-dark-blue z-10'>Submit</motion.button>
-          </form>
-        <Geocoding location={`${location}`}/>
+          <Geocoding/>
       </div>
     </>
   );
