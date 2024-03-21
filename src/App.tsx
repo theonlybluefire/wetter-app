@@ -2,7 +2,7 @@ import React, { useState,useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 //components
-import TempContainer from './components/FirstContainer';
+import FirstContainer from './components/FirstContainer';
 import ChartNextHours from './components/NextHours';
 import Geocoding from './components/Geocoding';
 import Loader from './components/Loader';
@@ -25,12 +25,13 @@ function App() {
         <div className="weatherContainer">
         </div>
         <div className='tempContainer'>
-          <TempContainer/>
+          <FirstContainer/>
         </div>
       </div>
       <div className=''> 
           <Geocoding/>
       </div>
+
     </>
   );
 }

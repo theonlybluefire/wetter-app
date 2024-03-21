@@ -1,6 +1,7 @@
 import { Card, Flex, Text, ProgressCircle } from "@tremor/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "./Loader";
 export default () => {//main func
   //var def
   const [temp, setTemp] = useState<number>();
@@ -22,7 +23,9 @@ export default () => {//main func
 
     if(forecastQuery.isLoading) { //loading case
       return (
-        <div>Loading...</div>
+        <div className="w-3/3 bg-stone-900 rounded-3xl h-20">
+          <Loader/>
+        </div>
       )
     }
     if (forecastQuery.error) { //error case
@@ -34,9 +37,9 @@ export default () => {//main func
   return ( 
 <div className="flex">
   <div className="m-auto grid items-center text-center bg-blue-700 w-1/3 h-20 rounded-3xl">
-    <h1>{temp}</h1>
+    <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
   </div>
-  <div className="m-auto grid items-center text-center bg-white w-2/3 h-20 rounded-3xl">
+  <div className="m-auto grid items-center text-center bg- w-2/3 h-20 rounded-3xl">
     <h1>{status}</h1>
   </div>
 </div>

@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         'dark-blue' : '#111827',
         'normal-grey' : '#0E0F13',
+        'smooth-white' : '#D4D4CC',
         // light mode
         tremor: {
           brand: {
