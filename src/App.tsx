@@ -24,8 +24,12 @@ function App() {
       <div>
         <div className="weatherContainer">
         </div>
-        <div className='tempContainer'>
+        <div className=' gap-5'>
           <FirstContainer/>
+          <div className='w-full'>
+            <ChartNextHours/>
+          </div>
+          
         </div>
       </div>
       <div className=''> 

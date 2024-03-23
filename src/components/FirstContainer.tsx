@@ -18,6 +18,22 @@ export default () => {//main func
   useEffect(() => { //process query data
     if(forecastQuery.data) {
       setTemp(Math.round(forecastQuery.data.current.apparent_temperature))
+      console.log('First Container forecraft Query Container',forecastQuery.data)
+      if (forecastQuery.data.rain > 0 || forecastQuery.data.snowfall == 0) {
+        setStatus('rainy')
+      }
+      else if (forecastQuery.data.snowfall > 0 || forecastQuery.data.showers == 0) {
+        setStatus('snow')
+      }
+      else if (forecastQuery.data.showers > 0) {
+        setStatus('shower')
+      }
+      else if (forecastQuery.data.is_day > 0) {
+        setStatus('normal')
+      }
+      else {
+        setStatus('night')
+      }
     }
     },[forecastQuery])
 
@@ -35,12 +51,12 @@ export default () => {//main func
       )
     }
   return ( 
-<div className="flex">
-  <div className="m-auto grid items-center text-center bg-blue-700 w-1/3 h-20 rounded-3xl">
+<div className="flex gap-5">
+  <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
     <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
   </div>
-  <div className="m-auto grid items-center text-center bg- w-2/3 h-20 rounded-3xl">
-    <h1>{status}</h1>
+  <div className="grid grow items-center text-center h-32 rounded-3xl bg-normal-grey">
+    <h1 className="font-extrabold text-white text-4xl">{status}</h1>
   </div>
 </div>
 
