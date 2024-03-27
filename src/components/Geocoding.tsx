@@ -96,13 +96,18 @@ export default () => { //main func
             event.preventDefault();
             setLocation(inputRef.current)
            }}>
-            <motion.input whileFocus={{scale:0.9}} type="text" onChange={(event) => {inputRef.current = event.target.value;}}
-              className='fixed bottom-0 left-0 mb-2 w-2/3 z-10'
-            />
-            <motion.button whileTap={{scale:0.8}} whileHover={{scale:1.01}} type='submit' className='fixed bottom-2 right-0 mb-0 mt-0 ml-20 w-1/4 bg-dark-blue z-10'>Submit</motion.button>
+          <div>
+            <div className='bg-rose-400 fixed bottom-5 flex w-full md:w-2/3 h-16'>
+              <motion.input whileFocus={{scale:0.9}} type="text" onChange={(event) => {inputRef.current = event.target.value;}}
+                className='left-2 mb-2 w-2/3 z-10'
+              />
+              <motion.button whileTap={{scale:0.8}} whileHover={{scale:1.01}} type='submit' className='bottom right-0 mb-0 mt-0 ml-20 w-1/4 bg-dark-blue z-10 h-12'>Submit</motion.button>
+            </div>
+          </div>
           </form>
+          
           <div className='flex items-center overflow-auto'>
-          <motion.div initial={{opacity:1}} animate={{height:'100%',width:'100%'}} transition={{duration:0.8}} className="md:h-1/3 md:w-1/2 h-full w-full bg-dark-blue rounded-3xl text-white flex items-center justify-center z-0">
+          <motion.div initial={{opacity:1}} animate={{height:'100%',width:'100%'}} transition={{duration:0.8}} className="md:h-1/3 md:w-1/2 h-full w-full bg-dark-blue rounded-3xl text-white flex items-center justify-center z-0 h-12">
            {table}
           <br/>
           <br/>

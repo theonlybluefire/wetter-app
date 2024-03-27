@@ -51,7 +51,7 @@ export default () => {//main func
       )
     }
   return ( 
-<div className="flex gap-5 p-5 rounded-3xl ">
+<div className="flex gap-5 p-5 rounded-3xl">
   <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
     <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
   </div>
