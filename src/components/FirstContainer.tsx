@@ -19,19 +19,19 @@ export default () => {//main func
     if(forecastQuery.data) {
       setTemp(Math.round(forecastQuery.data.current.temperature_2m))
       console.log('First Container forecraft Query Container',forecastQuery.data)
-      if (forecastQuery.data.rain > 0 || forecastQuery.data.snowfall == 0) {
+      if (forecastQuery.data.current.rain > 0 || forecastQuery.data.current.snowfall == 0) {
         setStatus('rainy')
       }
-      else if (forecastQuery.data.snowfall > 0 || forecastQuery.data.showers == 0) {
+      else if (forecastQuery.data.current.snowfall > 0 || forecastQuery.data.current.showers == 0) {
         setStatus('snow')
       }
-      else if (forecastQuery.data.showers > 0) {
+      else if (forecastQuery.data.current.showers > 0) {
         setStatus('shower')
       }
-      else if (forecastQuery.data.is_day > 0) {
+      else if (forecastQuery.data.current.is_day == 1) {
         setStatus('normal')
       }
-      else {
+      else if (forecastQuery.data.current.is_day == 0){
         setStatus('night')
       }
     }

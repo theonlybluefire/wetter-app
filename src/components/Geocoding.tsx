@@ -35,7 +35,7 @@ export default () => {
       classesFirstOutputDiv.current = 'h-full w-full fixed bottom-0 z-0'
       setResults(
         geocodingQuery.data.results.map((item) => (
-          <motion.div whileBlur={{opacity:0}} className='w-3/4 flex justify-center z-0'>
+          <motion.div className='w-3/4 flex justify-center z-0'>
             <div className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0'>
               <h1 className='text-right font-bold'>{item.admin4}</h1>
               <p className='text-right'>{item.admin3}</p>
@@ -93,10 +93,8 @@ export default () => {
         </motion.div>
         <motion.button 
           whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
-          className='fixed top-0 right-0 bg-dark-blue z-50'>
-            
+          className='fixed top-0 right-0 bg-red-900 z-50'>Close
         </motion.button>
-        
       </div>
       
     </>
