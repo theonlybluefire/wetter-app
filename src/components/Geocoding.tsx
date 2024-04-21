@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import { useQuery } from "@tanstack/react-query"
 import {
   Table,
@@ -19,7 +19,21 @@ export default () => {
   const [results, setResults] = useState<React.ReactNode | null>(null);
   const prevLocationRef = useRef<string | null>(null);
   const classesFirstOutputDiv = useRef<string | null>(null)
-
+  const [closeButton, setStateCloseButton] = useState<React.ReactNode | null >(null);
+  useEffect(() =>  {
+    if(results) {
+      setStateCloseButton(      <motion.button 
+        whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
+        className='fixed top-0 right-0 bg-red-900 z-50'>Close
+      </motion.button>)
+    }
+    else if (!results) {
+      setStateCloseButton(null)
+    }
+    else {
+      setStateCloseButton(<p>Error</p>)
+    }
+  },[results])
   // Geocoding-Abfrage
   const geocodingQuery = useQuery({
     queryFn: () =>
@@ -91,10 +105,9 @@ export default () => {
         >
           {results}
         </motion.div>
-        <motion.button 
-          whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
-          className='fixed top-0 right-0 bg-red-900 z-50'>Close
-        </motion.button>
+        <div>
+          {closeButton}
+        </div>
       </div>
       
     </>
