@@ -8,15 +8,8 @@ html {
   font-family: "Inter";
 }
 body {
-  background-color: #111318;
+  background-image:url(../public/images/rain.jpg ); 
   font-family: "Inter";
-
-}
-.geocodingAddButton {
-  background-color: #111827;
-  padding: 10px !important;
-  border-radius: 5px;
-  color: "D4D4CC";
 }
 input {
   color: #D4D4CC;

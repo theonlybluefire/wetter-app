@@ -22,8 +22,9 @@ export default () => {
   const [closeButton, setStateCloseButton] = useState<React.ReactNode | null >(null);
   useEffect(() =>  {
     if(results) {
-      setStateCloseButton(      <motion.button 
-        whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
+      setStateCloseButton(
+      <motion.button 
+        whileTap={{scale:0.7}} onTap={() => {setResults(null);classesFirstOutputDiv.current = ''}}
         className='fixed top-0 right-0 bg-red-900 z-50'>Close
       </motion.button>)
     }
@@ -47,13 +48,15 @@ export default () => {
     if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) {
       prevLocationRef.current = location;
       classesFirstOutputDiv.current = 'h-full w-full fixed bottom-0 z-0'
+      
       setResults(
         geocodingQuery.data.results.map((item) => (
-          <motion.div className='w-3/4 flex justify-center z-0'>
-            <div className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0'>
-              <h1 className='text-right font-bold'>{item.admin4}</h1>
-              <p className='text-right'>{item.admin3}</p>
-            </div>
+          <motion.div className='w-3/4 flex justify-center z-0 m-2'>
+            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} onClick={() => {setStateCloseButton(null);classesFirstOutputDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0 p-5'>
+              <h1 className='text-left font-bold'>{item.admin4 || item.admin3}</h1>
+              <p className='text-left'>{item.admin3}</p>
+              <p className='text-right '>{item.country_code}</p>
+            </motion.div>
           </motion.div>
         ))
       );

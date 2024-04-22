@@ -19,10 +19,10 @@ export default () => {//main func
     if(forecastQuery.data) {
       setTemp(Math.round(forecastQuery.data.current.temperature_2m))
       console.log('First Container forecraft Query Container',forecastQuery.data)
-      if (forecastQuery.data.current.rain > 0 || forecastQuery.data.current.snowfall == 0) {
+      if (forecastQuery.data.current.rain > 0 || forecastQuery.data.current.snowfall !> 0 || forecastQuery.data.current.showers !>0) {
         setStatus('rainy')
       }
-      else if (forecastQuery.data.current.snowfall > 0 || forecastQuery.data.current.showers == 0) {
+      else if (forecastQuery.data.current.snowfall > 0 || forecastQuery.data.current.showers !>0) {
         setStatus('snow')
       }
       else if (forecastQuery.data.current.showers > 0) {
@@ -51,7 +51,7 @@ export default () => {//main func
       )
     }
   return ( 
-<div className="flex gap-5 p-5 rounded-3xl">
+<div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 mb-14">
   <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
     <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
   </div>
