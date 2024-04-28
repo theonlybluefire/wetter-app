@@ -15,7 +15,7 @@ function App() {
   },[window.localStorage.getItem('location')])
   return (
     <>
-      <motion.div animate={{y:0}} initial={{y:-20}} className='text-left pl-4 mt-2 mb-5'>
+      <motion.div animate={{y:0}} initial={{y:-20}} className='text-left pl-4 mt-5 mb-5'>
         <h1 className='text-stone-400 font-bold text-4xl mb-1'>Currently</h1>
         <h3 className='text-stone-600 font-semibold pl-2'>{currentLocation}</h3>
       </motion.div>

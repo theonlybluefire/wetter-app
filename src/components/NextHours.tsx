@@ -49,7 +49,7 @@ export default () => { //
       return (
         <>
         <Card>
-          <Title>Temperature</Title>
+          <Title className="text-3xl font-extrabold text-neutral-300">next hours</Title>
           <AreaChart
             className="h-72 mt-4"
             data={array}

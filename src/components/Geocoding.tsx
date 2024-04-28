@@ -23,7 +23,8 @@ export default () => {
   useEffect(() =>  {
     if(results) {
       setStateCloseButton(
-      <motion.button 
+      <motion.button
+        animate={{}}
         whileTap={{scale:0.7}} onTap={() => {setResults(null);classesResultsDiv.current = ''}}
         className='fixed top-0 right-0 bg-red-900 z-50'>Close
       </motion.button>)
@@ -51,7 +52,7 @@ export default () => {
       
       setResults(
         geocodingQuery.data.results.map((item) => (
-          <motion.div className='w-3/4 flex justify-center z-0 m-2'>
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} className='w-3/4 flex justify-center z-0 m-2'>
             <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} onClick={() => {setStateCloseButton(null);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0 p-5'>
               <h1 className='text-left font-bold'>{item.admin4 || item.admin3}</h1>
               <p className='text-left'>{item.admin3}</p>
@@ -101,9 +102,6 @@ export default () => {
 
       <div className={classesResultsDiv.current}>
         <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ height: '100%', width: '100%' }}
-          transition={{ duration: 0.8 }}
           className="overflow-auto z-0"
         >
           {results}
