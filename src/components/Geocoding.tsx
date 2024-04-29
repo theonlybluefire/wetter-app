@@ -26,7 +26,7 @@ export default () => {
       <motion.button
         animate={{}}
         whileTap={{scale:0.7}} onTap={() => {setResults(null);classesResultsDiv.current = ''}}
-        className='fixed top-0 right-0 bg-red-900 z-50'>Close
+        className='absolute top-0 right-0 bg-red-900 z-50'>Close
       </motion.button>)
     }
     else if (!results) {
@@ -49,14 +49,17 @@ export default () => {
     if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) {
       prevLocationRef.current = location;
       classesResultsDiv.current = 'h-full w-full fixed bottom-0 z-0'
-      
+      console.log('Item Data',geocodingQuery.data.results)
       setResults(
         geocodingQuery.data.results.map((item) => (
           <motion.div initial={{opacity:0}} animate={{opacity:1}} className='w-3/4 flex justify-center z-0 m-2'>
-            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} onClick={() => {setStateCloseButton(null);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0 p-5'>
-              <h1 className='text-left font-bold'>{item.admin4 || item.admin3}</h1>
-              <p className='text-left'>{item.admin3}</p>
-              <p className='text-right '>{item.country_code}</p>
+            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0 p-5' onClick={() => {setStateCloseButton(null);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
+              <h1 className='text-left font-bold'>{item.admin4 || 'No information'}</h1>
+              <p className='text-left'>{item.admin3 || item.admin2 || item.admin1}</p>
+              <div className='grid items-center justify-end'>
+              <p className='text-right'>{item.country}</p>
+              </div>
+              
             </motion.div>
           </motion.div>
         ))
