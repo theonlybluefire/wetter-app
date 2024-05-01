@@ -20,6 +20,8 @@ export default () => {
   const prevLocationRef = useRef<string | null>(null);
   const classesResultsDiv = useRef<string | null>(null)
   const [closeButton, setStateCloseButton] = useState<React.ReactNode | null >(null);
+  const classesGeocodingBackgroundDiv = useRef<string>('overflow-auto z-0')
+  
   useEffect(() =>  {
     if(results) {
       setStateCloseButton(
@@ -44,16 +46,16 @@ export default () => {
       ),
     queryKey: ['geocodingQuery', location],
   });
-  // useEffect-Hook, um den Zustand basierend auf Änderungen des location-Zustands zu aktualisieren
   useEffect(() => {
     if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) {
       prevLocationRef.current = location;
       classesResultsDiv.current = 'h-full w-full fixed bottom-0 z-0'
+      classesGeocodingBackgroundDiv.current = 'overflow-auto z-0 backdrop-blur-md'
       console.log('Item Data',geocodingQuery.data.results)
       setResults(
         geocodingQuery.data.results.map((item) => (
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} className='w-3/4 flex justify-center z-0 m-2'>
-            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} className='w-1/2 rounded-3xl h-20 bg-rose-600 z-0 p-5' onClick={() => {setStateCloseButton(null);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} className='w-full flex justify-center z-0 m-2 '>
+            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} className='md:w-1/2 w-full rounded-3xl h-20 bg-rose-600 z-0 p-5' onClick={() => {setStateCloseButton(null);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
               <h1 className='text-left font-bold'>{item.admin4 || 'No information'}</h1>
               <p className='text-left'>{item.admin3 || item.admin2 || item.admin1}</p>
               <div className='grid items-center justify-end'>
@@ -105,7 +107,7 @@ export default () => {
 
       <div className={classesResultsDiv.current}>
         <motion.div
-          className="overflow-auto z-0"
+          className={classesGeocodingBackgroundDiv.current} 
         >
           {results}
         </motion.div>
