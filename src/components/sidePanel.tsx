@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { useQueryClient } from '@tanstack/react-query';
 
 export default () => {
     const forecastQuery = useQuery({

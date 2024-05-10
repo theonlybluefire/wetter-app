@@ -1,12 +1,10 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 //components
 import FirstContainer from './components/FirstContainer';
 import ChartNextHours from './components/NextHours';
 import Geocoding from './components/Geocoding';
-import Loader from './components/Loader';
-import { Scale } from 'lucide-react';
 function App() {
   //var definition
   const [currentLocation, setCurrentLocation] = useState<string>()

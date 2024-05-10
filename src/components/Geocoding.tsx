@@ -1,16 +1,7 @@
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import { useQuery } from "@tanstack/react-query"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeaderCell,
-  TableRow,
-} from '@tremor/react';
 import { motion } from "framer-motion";
 import Loader from "./Loader";
-import { isObjectLiteralElement } from 'typescript';
 
 export default () => {
   // Variablen-Deklarationen
