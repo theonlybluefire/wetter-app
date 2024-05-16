@@ -35,23 +35,20 @@ export default () => {
   useEffect(() => {
     if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) {
       prevLocationRef.current = location;
-      classesResultsDiv.current = 'h-full w-full fixed bottom-0 z-0'
-      classesGeocodingBackgroundDiv.current = 'overflow-auto z-0 backdrop-blur-md'
       console.log('Item Data',geocodingQuery.data.results)
       setResults(
         geocodingQuery.data.results.map((item) => (
-          <AnimatePresence>
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:2}} className='w-full flex justify-center z-0 m-2 '>
-            <motion.div whileHover={{scale:1.1}} whileTap={{scale:0.9}} className='md:w-1/2 w-full rounded-3xl h-20 bg-rose-600 z-0 p-5' onClick={() => {setShowCloseButton(false);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
+          <motion.div  className='w-full flex justify-center z-0 m-2 '>
+            <AnimatePresence>
+            <motion.div key={'results'} whileHover={{scale:1.1}} whileTap={{scale:0.9}} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className='md:w-1/2 w-full rounded-3xl h-20 bg-normal z-0 p-5' onClick={() => {setShowCloseButton(false);classesResultsDiv.current=null;window.localStorage.setItem('longitude',item.longitude);window.localStorage.setItem('latitude',item.latitude);localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
               <h1 className='text-left font-bold'>{item.admin4 || 'No information'}</h1>
               <p className='text-left'>{item.admin3 || item.admin2 || item.admin1}</p>
               <div className='grid items-center justify-end'>
               <p className='text-right'>{item.country}</p>
               </div>
-              
             </motion.div>
+            </AnimatePresence>
           </motion.div>
-          </AnimatePresence>
         ))
       );
     }
@@ -93,10 +90,8 @@ export default () => {
         </div>
       </form>
 
-      <div className={classesResultsDiv.current}>
-        <motion.div
-          className={classesGeocodingBackgroundDiv.current}
-        >
+      <div className={results && 'h-full w-full fixed bottom-0 z-0' }>
+        <motion.div className={results && 'overflow-auto z-0'}>
             {results}
         </motion.div>
         <div>
@@ -104,9 +99,9 @@ export default () => {
             {showCloseButton && <motion.button
     
               initial={{opacity:0,y:-100}}
-              animate={{opacity:1,y:0}}
-              exit={{opacity:0,y:-100 }}
-              whileTap={{scale:0.7}} onTap={() => {setResults(null);classesResultsDiv.current = ''}}
+              animate={{opacity:1,y:[10,0,]}}
+              exit={{opacity:0,y:[10,-100] }}
+              whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
               className='absolute top-0 right-0 bg-red-900 z-50'>Close
             </motion.button>}
           </AnimatePresence>
