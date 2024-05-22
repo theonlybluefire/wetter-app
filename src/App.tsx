@@ -4,13 +4,14 @@ import './App.css';
 //components
 import FirstContainer from './components/FirstContainer';
 import ChartNextHours from './components/NextHours';
-import Geocoding from './components/Geocoding';
+import { Geocoding } from './components/Geocoding';
 function App() {
   //var definition
   const [currentLocation, setCurrentLocation] = useState<string>()
+  const location = window.localStorage.getItem('location')
   useEffect(() => {
     setCurrentLocation(localStorage.getItem('location'))
-  },[window.localStorage.getItem('location')])
+  },[location])
   return (
     <>
       <motion.div animate={{y:0}} initial={{y:-20}} className='text-left pl-4 mt-5 mb-5'>
