@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query"
 import { motion, AnimatePresence } from "framer-motion"
-import Loader from "./Loader";
+import { Loader } from './Loader';
 
 export function Geocoding() {
   // Variablen-Deklarationen

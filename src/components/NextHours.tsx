@@ -19,7 +19,7 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export default () => { //
+export function ChartNextHours()  { //
   const array:Object[] = []
 
     const forecastQuery = useQuery({

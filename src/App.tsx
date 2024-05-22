@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 //components
-import FirstContainer from './components/FirstContainer';
-import ChartNextHours from './components/NextHours';
+import { FirstContainer } from './components/FirstContainer';
+import { ChartNextHours } from './components/NextHours';
 import { Geocoding } from './components/Geocoding';
 function App() {
   //var definition

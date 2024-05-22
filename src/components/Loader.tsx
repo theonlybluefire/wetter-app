@@ -3,7 +3,7 @@ import { cardio } from 'ldrs'
 import { motion } from "framer-motion"
 
 
-export default () => {
+export function Loader() {
   cardio.register()
   return (
     <motion.div 
