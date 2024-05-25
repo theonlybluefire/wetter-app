@@ -6,6 +6,10 @@ import { FirstContainer } from './components/FirstContainer';
 import { ChartNextHours } from './components/NextHours';
 import { Geocoding } from './components/Geocoding';
 function App() {
+  if(!localStorage.getItem('longitude') && !localStorage.getItem('latitude')) {
+    localStorage.setItem('longitude','13.41')
+    localStorage.setItem('latitude','52.52')
+  }
   //var definition
   const [currentLocation, setCurrentLocation] = useState<string>()
   const location = window.localStorage.getItem('location')

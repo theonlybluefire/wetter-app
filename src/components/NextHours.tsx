@@ -21,7 +21,6 @@ const customTooltip = ({ payload, active }) => {
 
 export function ChartNextHours()  { //
   const array:Object[] = []
-
     const forecastQuery = useQuery({
       queryFn: () =>
           fetch(`https://api.open-meteo.com/v1/forecast?latitude=${localStorage.getItem('latitude')}&longitude=${localStorage.getItem('longitude')}&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin`).then((res) =>
@@ -31,7 +30,6 @@ export function ChartNextHours()  { //
   })
 
     if(forecastQuery.data ) {
-      console.log(forecastQuery.data.hourly.temperature_2m)
       class ChartObject {
         date : Date
         Temperature:Number
