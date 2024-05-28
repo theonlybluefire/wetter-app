@@ -25,7 +25,7 @@ function App() {
       <div className=''>
         <div className="weatherContainer">
         </div>
-        <div className=' gap-5'>
+        <div className='grid gap-2 md:gap-10'>
           <FirstContainer/>
           <div className='w-full'>
             <ChartNextHours/>

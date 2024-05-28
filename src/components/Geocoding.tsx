@@ -68,18 +68,18 @@ export function Geocoding() {
         setLocation(inputRef.current || '');
       }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
-          <div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-10'>
+          <div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'>
             <motion.input
               whileFocus={{ scale: 0.9 }}
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
-              className='relative w-2/3 z-50 p-3 rounded-xl bg-dark-blue text-smooth-white font-bold'
+              className='w-2/3 z-50 p-3 rounded-xl bg-dark-blue text-smooth-white font-bold'
             />
             <motion.button
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.01 }}
               type='submit'
-              className='relative w-1/4 bg-dark-blue z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
+              className='w-1/4 bg-dark-blue z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
             >
               Submit
             </motion.button>

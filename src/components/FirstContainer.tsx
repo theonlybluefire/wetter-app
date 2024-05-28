@@ -50,7 +50,7 @@ export function FirstContainer ()  {//main func
       )
     }
   return ( 
-<div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 mb-14">
+<div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 ">
   <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
     <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
   </div>
