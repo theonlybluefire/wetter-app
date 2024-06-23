@@ -13,9 +13,12 @@ export function Geocoding() {
   const [showCloseButton, setShowCloseButton] = useState<boolean>(false);
   const [showResultsWrapperClasses, setResultsWrapperClasses] = useState<boolean>(false);
   useEffect(() => {
+    console.log("Results changed",{results})
     if(results) {
       console.log('set wrapper classes')
       setResultsWrapperClasses(true);
+      //log results
+      console.log({results})
     }
     else if (!results) {
       setTimeout(() => {
