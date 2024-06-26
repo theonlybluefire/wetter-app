@@ -13,7 +13,6 @@ export function Geocoding() {
   const [showCloseButton, setShowCloseButton] = useState<boolean>(false);
   const [showResultsWrapperClasses, setResultsWrapperClasses] = useState<boolean>(false);
   useEffect(() => {
-    console.log("Results changed",{results})
     if(results) {
       console.log('set wrapper classes')
       setResultsWrapperClasses(true);
@@ -77,6 +76,7 @@ export function Geocoding() {
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
               className='w-2/3 z-50 p-3 rounded-xl bg-dark-blue text-smooth-white font-bold'
+              placeholder="Where's your location"
             />
             <motion.button
               whileTap={{ scale: 0.8 }}
@@ -109,8 +109,8 @@ export function Geocoding() {
                     window.localStorage.setItem('longitude',item.longitude);
                     window.localStorage.setItem('latitude',item.latitude);
                     localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
-                  <h1 className='text-left font-bold'>{item.admin4 || 'No information'}</h1>
-                  <p className='text-left'>{item.admin3 || item.admin2 || item.admin1} | {item.country}</p>
+                  <h1 className='text-left font-bold text-smooth-white'>{item.admin4 || 'No information'}</h1>
+                  <p className='text-left text-smooth-white'>{item.admin3 || item.admin2 || item.admin1} | {item.country}</p>
                 </motion.div>
              </motion.div>
             ))}
