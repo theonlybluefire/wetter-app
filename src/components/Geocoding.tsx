@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query"
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader } from './Loader';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function Geocoding() {
   // Variablen-Deklarationen
@@ -12,6 +13,7 @@ export function Geocoding() {
   const classesResultsDiv = useRef<string | null>(null);
   const [showCloseButton, setShowCloseButton] = useState<boolean>(false);
   const [showResultsWrapperClasses, setResultsWrapperClasses] = useState<boolean>(false);
+  const queryClient = useQueryClient(); //Query Client
   useEffect(() => {
     if(results) {
       console.log('set wrapper classes')
@@ -66,12 +68,15 @@ export function Geocoding() {
   return (
     <>
       <form onSubmit={(event) => {
+        queryClient.resetQueries({ queryKey: ['geocodingQuery', location] })
         event.preventDefault();
         setLocation(inputRef.current || '');
       }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
           <div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'>
             <motion.input
+              animate={{y:0}}
+              initial={{y:50}}
               whileFocus={{ scale: 0.9 }}
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
@@ -108,7 +113,8 @@ export function Geocoding() {
                     classesResultsDiv.current=null;
                     window.localStorage.setItem('longitude',item.longitude);
                     window.localStorage.setItem('latitude',item.latitude);
-                    localStorage.setItem('location',`${item.admin4}, ${item.admin3}`);window.location.reload()}} >
+                    localStorage.setItem('location',`${item.admin4||"No information"}, ${item.admin3||item.admin2||item.admin1}`);
+                    window.location.reload()}} >
                   <h1 className='text-left font-bold text-smooth-white'>{item.admin4 || 'No information'}</h1>
                   <p className='text-left text-smooth-white'>{item.admin3 || item.admin2 || item.admin1} | {item.country}</p>
                 </motion.div>

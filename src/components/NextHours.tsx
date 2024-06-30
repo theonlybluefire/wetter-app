@@ -11,7 +11,7 @@ const customTooltip = ({ payload, active }) => {
           <div className={`w-1 flex flex-col bg-${category.color}-500 rounded`} />
           <div className="space-y-1">
             <p className="text-tremor-content">{category.dataKey}</p>
-            <p className="font-medium text-tremor-content-emphasis">{category.value} bpm</p>  
+            <p className="font-medium text-tremor-content-emphasis">{category.value} Celsius</p>  
           </div>
         </div>
       ))}
