@@ -13,6 +13,7 @@ export function Geocoding() {
   const classesResultsDiv = useRef<string | null>(null);
   const [showCloseButton, setShowCloseButton] = useState<boolean>(false);
   const [showResultsWrapperClasses, setResultsWrapperClasses] = useState<boolean>(false);
+  const [showInput, setShowInput] = useState<boolean>(true)
   const queryClient = useQueryClient(); //Query Client
   useEffect(() => {
     if(results) {
@@ -31,12 +32,15 @@ export function Geocoding() {
   useEffect(() =>  {
     if(results) {
       setShowCloseButton(true)
+      setShowInput(false)
     }
     else if (!results) {
       setShowCloseButton(false)
+      setShowInput(true)
     }
     else {
       setShowCloseButton(false)
+      setShowInput(true)
     }
   },[results])
   // Geocoding-Abfrage
@@ -62,21 +66,28 @@ export function Geocoding() {
   }
   if(geocodingQuery.isLoading) {
     console.log('Loading')
+    console.log('Loading State, data : ',geocodingQuery.data)
     return (<Loader/>)
   }
-
+  if(geocodingQuery.data === undefined && !geocodingQuery.isLoading) {
+    console.log('No results')
+  }
   return (
     <>
-      <form onSubmit={(event) => {
+    <AnimatePresence>
+      {showInput && 
+       <form onSubmit={(event) => {
         queryClient.resetQueries({ queryKey: ['geocodingQuery', location] })
         event.preventDefault();
         setLocation(inputRef.current || '');
       }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
-          <div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'>
+          <motion.div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'
+            exit={{y:50}}
+            animate={{y:0}}
+            initial={{y:50}}>
             <motion.input
-              animate={{y:0}}
-              initial={{y:50}}
+            
               whileFocus={{ scale: 0.9 }}
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
@@ -84,6 +95,9 @@ export function Geocoding() {
               placeholder="Where's your location"
             />
             <motion.button
+              exit={{y:50}}
+              animate={{y:0}}
+              initial={{y:50}}
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.01 }}
               type='submit'
@@ -91,12 +105,15 @@ export function Geocoding() {
             >
               Submit
             </motion.button>
-          </div>
+          </motion.div>
         </div>
       </form>
+      }
 
-      <div className={showResultsWrapperClasses && 'overflow-auto h-full w-full fixed bottom-0 z-0' }>
-        <motion.div className={showResultsWrapperClasses && 'overflow-auto z-0'}>
+      </AnimatePresence>
+
+      <div className={showResultsWrapperClasses && 'overflow-auto h-full w-full top-0 fixed z-0' }>
+        <motion.div className={showResultsWrapperClasses && 'overflow-y-auto overflow-x-hidden z-0'}> 
           <AnimatePresence>
             {results && results.map((item,index) => (
               <motion.div  
@@ -125,7 +142,6 @@ export function Geocoding() {
         <div>
           <AnimatePresence>
             {showCloseButton && <motion.button
-    
               initial={{opacity:0,y:-100}}
               animate={{opacity:1,y:[10,0,]}}
               exit={{opacity:0,y:[10,-100] }}
