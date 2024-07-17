@@ -52,25 +52,27 @@ export function Geocoding() {
     queryKey: ['geocodingQuery', location],
   });
   useEffect(() => {
-    if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) {
-      prevLocationRef.current = location;
+    if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) { //if geocoding.data da und geocoding.data.results da und wenn location nicht das gleiche ist die prevLocationRef.current
+      prevLocationRef.current = location; //setze prev... auf location
       console.log('Item Data',geocodingQuery.data.results)
-      setResults(geocodingQuery.data.results)
+      setResults(geocodingQuery.data.results) //setze results
     }
-  }, [location, geocodingQuery.data]);
-  if(geocodingQuery.isError) {
-    console.log('Error')
+  }, [location, geocodingQuery.data, prevLocationRef.current]);
+  if(geocodingQuery.isError || geocodingQuery.error) {
+    console.log('got Error',geocodingQuery.error)
     return (<div>
       Error
     </div>)
   }
   if(geocodingQuery.isLoading) {
-    console.log('Loading')
-    console.log('Loading State, data : ',geocodingQuery.data)
+    console.log('Loading ...., currentData : ',geocodingQuery.data)
     return (<Loader/>)
   }
-  if(geocodingQuery.data === undefined && !geocodingQuery.isLoading) {
-    console.log('No results')
+  if(geocodingQuery.data) {
+    console.log('Got Data, following: ' , geocodingQuery.data)
+  }
+  if(geocodingQuery.data && !geocodingQuery.data.result && !results && prevLocationRef!=null) {
+    console.warn('No Results')
   }
   return (
     <>
