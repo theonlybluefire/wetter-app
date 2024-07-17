@@ -9,12 +9,12 @@ export function Geocoding() {
   const [location, setLocation] = useState('');
   const inputRef = useRef<string | null>(null);
   const [results, setResults] = useState<any | null>(null);
-  const prevLocationRef = useRef<string | null>(null);
-  const classesResultsDiv = useRef<string | null>(null);
+  const classesResultsDivRef = useRef<string | null>(null);
   const [showCloseButton, setShowCloseButton] = useState<boolean>(false);
   const [showResultsWrapperClasses, setResultsWrapperClasses] = useState<boolean>(false);
   const [showInput, setShowInput] = useState<boolean>(true)
   const queryClient = useQueryClient(); //Query Client
+  const inputFormSubmittedRef = useRef<boolean>(false);
   useEffect(() => {
     if(results) {
       console.log('set wrapper classes')
@@ -52,12 +52,12 @@ export function Geocoding() {
     queryKey: ['geocodingQuery', location],
   });
   useEffect(() => {
-    if (geocodingQuery.data && geocodingQuery.data.results && location !== prevLocationRef.current) { //if geocoding.data da und geocoding.data.results da und wenn location nicht das gleiche ist die prevLocationRef.current
-      prevLocationRef.current = location; //setze prev... auf location
-      console.log('Item Data',geocodingQuery.data.results)
-      setResults(geocodingQuery.data.results) //setze results
+    if (geocodingQuery.data && geocodingQuery.data.results && inputFormSubmittedRef.current===true) {
+      console.log('settings results')
+      setResults(geocodingQuery.data.results);
+      inputFormSubmittedRef.current = false;
     }
-  }, [location, geocodingQuery.data, prevLocationRef.current]);
+  }, [location, geocodingQuery.data]);
   if(geocodingQuery.isError || geocodingQuery.error) {
     console.log('got Error',geocodingQuery.error)
     return (<div>
@@ -71,8 +71,9 @@ export function Geocoding() {
   if(geocodingQuery.data) {
     console.log('Got Data, following: ' , geocodingQuery.data)
   }
-  if(geocodingQuery.data && !geocodingQuery.data.result && !results && prevLocationRef!=null) {
-    console.warn('No Results')
+  if(geocodingQuery.data && !geocodingQuery.data.results && inputFormSubmittedRef.current===true) {
+    console.warn('No results')
+    inputFormSubmittedRef.current=false;
   }
   return (
     <>
@@ -81,7 +82,8 @@ export function Geocoding() {
        <form onSubmit={(event) => {
         queryClient.resetQueries({ queryKey: ['geocodingQuery', location] })
         event.preventDefault();
-        setLocation(inputRef.current || '');
+        setLocation(inputRef.current || null);
+        inputFormSubmittedRef.current = true
       }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
           <motion.div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'
@@ -129,7 +131,7 @@ export function Geocoding() {
                   whileTap={{scale:0.9,cursor:'grabbing'}}
                   className='md:w-1/2 w-full rounded-3xl h-20 bg-dark-blue z-0 p-5' 
                   onClick={() => {setShowCloseButton(false);
-                    classesResultsDiv.current=null;
+                    classesResultsDivRef.current=null;
                     window.localStorage.setItem('longitude',item.longitude);
                     window.localStorage.setItem('latitude',item.latitude);
                     localStorage.setItem('location',`${item.admin4||"No information"}, ${item.admin3||item.admin2||item.admin1}`);
