@@ -5,7 +5,7 @@ import { Loader } from './Loader';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function Geocoding() {
-  // Variablen-Deklarationen
+  //variables
   const [location, setLocation] = useState('');
   const inputRef = useRef<string | null>(null);
   const [results, setResults] = useState<any | null>(null);
@@ -15,6 +15,9 @@ export function Geocoding() {
   const [showInput, setShowInput] = useState<boolean>(true)
   const queryClient = useQueryClient(); //Query Client
   const inputFormSubmittedRef = useRef<boolean>(false);
+  const [noResults, setNoResults] = useState<boolean>(false);
+
+
   useEffect(() => {
     if(results) {
       console.log('set wrapper classes')
@@ -29,6 +32,7 @@ export function Geocoding() {
       },1000) 
     }
   },[results])
+
   useEffect(() =>  {
     if(results) {
       setShowCloseButton(true)
@@ -43,38 +47,46 @@ export function Geocoding() {
       setShowInput(true)
     }
   },[results])
-  // Geocoding-Abfrage
-  const geocodingQuery = useQuery({
+
+
+  const geocodingQuery = useQuery({ //geocoding query
     queryFn: () =>
       fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=10&language=en&format=json`).then((res) =>
         res.json(),
       ),
     queryKey: ['geocodingQuery', location],
   });
+
+
   useEffect(() => {
-    if (geocodingQuery.data && geocodingQuery.data.results && inputFormSubmittedRef.current===true) {
+    if (geocodingQuery.data && geocodingQuery.data.results && inputFormSubmittedRef.current===true) { //results+form submit case
       console.log('settings results')
       setResults(geocodingQuery.data.results);
       inputFormSubmittedRef.current = false;
     }
   }, [location, geocodingQuery.data]);
-  if(geocodingQuery.isError || geocodingQuery.error) {
+
+  if(geocodingQuery.isError || geocodingQuery.error) { //error case
     console.log('got Error',geocodingQuery.error)
     return (<div>
       Error
     </div>)
   }
-  if(geocodingQuery.isLoading) {
-    console.log('Loading ...., currentData : ',geocodingQuery.data)
+  if(geocodingQuery.isLoading) { //loading case
     return (<Loader/>)
   }
-  if(geocodingQuery.data) {
-    console.log('Got Data, following: ' , geocodingQuery.data)
-  }
-  if(geocodingQuery.data && !geocodingQuery.data.results && inputFormSubmittedRef.current===true) {
+  if(geocodingQuery.data && !geocodingQuery.data.results && inputFormSubmittedRef.current===true) { //no results case
+    console.log('no results, current varibales ',noResults, '<- No Reults', showInput,'<- showInput',setResultsWrapperClasses,'<- results wrapper classes')
+    setNoResults(true)
+    setShowInput(false)
+    setResultsWrapperClasses(true)
     console.warn('No results')
+    console.log('no results, laest varibales after change ',noResults, '<- No Reults', showInput,'<- showInput',showResultsWrapperClasses,'<- results wrapper classes')
     inputFormSubmittedRef.current=false;
+
   }
+
+
   return (
     <>
     <AnimatePresence>
@@ -141,6 +153,29 @@ export function Geocoding() {
                 </motion.div>
              </motion.div>
             ))}
+            {noResults && 
+            <div>
+              <p>NO RESULTS</p> {/* just to have a visual to see if it's actualy being triggerd*/}
+
+              <motion.div
+                initial={{y:window.innerHeight,scale:0.2,overflow:'hidden'}} 
+                animate={{y:0,scale:1}} 
+                exit={{y:window.innerHeight,scale:0.2,overflow:'hidden'}}
+                >
+              </motion.div>
+              <motion.button 
+                initial={{opacity:0,y:-100}}
+                animate={{opacity:1,y:[10,0,]}}
+                exit={{opacity:0,y:[10,-100] }}
+                whileTap={{scale:0.7}}
+                className='absolute top-0 right-0 bg-red-900 z-50 p-3 rounded-xl m-4'
+                onTap={() => {setShowInput(true);setNoResults(false);setResultsWrapperClasses(true)}}
+              >Close
+              </motion.button>
+            </div>
+
+            
+            }
           </AnimatePresence>
         </motion.div>
         <div>
@@ -149,7 +184,8 @@ export function Geocoding() {
               initial={{opacity:0,y:-100}}
               animate={{opacity:1,y:[10,0,]}}
               exit={{opacity:0,y:[10,-100] }}
-              whileTap={{scale:0.7}} onTap={() => {setResults(null)}}
+              whileTap={{scale:0.7}} 
+              onTap={() => {setResults(null)}}
               className='absolute top-0 right-0 bg-red-900 z-50 p-3 rounded-xl m-4'>Close
             </motion.button>}
           </AnimatePresence>
