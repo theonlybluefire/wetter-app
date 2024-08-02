@@ -52,7 +52,7 @@ export function FirstContainer ()  {//main func
   return ( 
 <div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 ">
   <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
-    <h1 className="font-extrabold text-white text-4xl">{temp}</h1>
+    <h1 className="font-extrabold text-white text-4xl">{temp} °C</h1>
   </div>
   <div className="grid grow items-center text-center h-32 rounded-3xl bg-normal-grey">
     <h1 className="font-extrabold text-white text-4xl">{status}</h1>

@@ -31,16 +31,17 @@ export function ChartNextHours()  { //
 
     if(forecastQuery.data ) {
       class ChartObject {
-        date : Date
+        date : string
         Temperature:Number
         constructor (i:number){
-          this.date = data.hourly.time[i];
+          this.date = `${new Date(data.hourly.time[i]).getHours()}:00`;
           this.Temperature = Math.round(data.hourly.temperature_2m[i]);
         }
       } 
+
       const data = forecastQuery.data
       console.log('Started pushing data')
-      for(let i = 0;i<10;i++) {
+      for(let i = new Date().getHours();i<new Date().getHours()+10;i++) {
         array.push(new ChartObject(i))
         console.log(array)
       }

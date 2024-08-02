@@ -18,37 +18,6 @@ export function Geocoding() {
   const [noResults, setNoResults] = useState<boolean>(false);
 
 
-  useEffect(() => {
-    if(results) {
-      console.log('set wrapper classes')
-      setResultsWrapperClasses(true);
-      //log results
-      console.log({results})
-    }
-    else if (!results) {
-      setTimeout(() => {
-        console.log('unset wrapper classes')
-        setResultsWrapperClasses(false)
-      },1000) 
-    }
-  },[results])
-
-  useEffect(() =>  {
-    if(results) {
-      setShowCloseButton(true)
-      setShowInput(false)
-    }
-    else if (!results) {
-      setShowCloseButton(false)
-      setShowInput(true)
-    }
-    else {
-      setShowCloseButton(false)
-      setShowInput(true)
-    }
-  },[results])
-
-
   const geocodingQuery = useQuery({ //geocoding query
     queryFn: () =>
       fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=10&language=en&format=json`).then((res) =>
@@ -56,6 +25,38 @@ export function Geocoding() {
       ),
     queryKey: ['geocodingQuery', location],
   });
+
+
+  useEffect(() => {
+    if(results) { //results ? then activate the classes of the results and no results container
+      setResultsWrapperClasses(true);
+      //log results
+      console.log({results})
+    }
+    if (!results && inputFormSubmittedRef.current===false) {
+        console.log('unset wrapper classes')
+        setResultsWrapperClasses(false)
+    }
+    if (geocodingQuery.data && !geocodingQuery.data.results && inputFormSubmittedRef.current===true) {
+      console.log('set wrapper classes no results');
+      setResultsWrapperClasses(true)
+    }
+  },[results, geocodingQuery.data])
+
+  useEffect(() =>  { 
+    if(results) { //when results show closebutton and hide Input
+      setShowCloseButton(true)
+      setShowInput(false)
+    }
+    else if (!results) { //when no results, not show close button and show Input
+      setShowCloseButton(false) 
+      setShowInput(true)
+    }
+    else { //else not show Close button and show input
+      setShowCloseButton(false)
+      setShowInput(true)
+    }
+  },[results])
 
 
   useEffect(() => {
