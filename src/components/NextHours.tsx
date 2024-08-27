@@ -20,7 +20,7 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export function ChartNextHours()  { //
+export function ChartNextHours()  { 
   const array:Object[] = []
     const forecastQuery = useQuery({
       queryFn: () =>
@@ -31,6 +31,7 @@ export function ChartNextHours()  { //
   })
 
     if(forecastQuery.data ) {
+      console.log(forecastQuery.data.hourly)
       class ChartObject {
         date : string
         Temperature:Number
@@ -43,8 +44,6 @@ export function ChartNextHours()  { //
       const data = forecastQuery.data
       for(let i = new Date().getHours();i<new Date().getHours()+10;i++) { //gets current hour +7 musst be bigger than i for the loop to remain
         array.push(new ChartObject(i)) //push new Object
-        array.push(new ChartObject(i))
-        console.log(array)
       }
       return (
         <>

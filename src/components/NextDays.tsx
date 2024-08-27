@@ -22,6 +22,8 @@ const customTooltip = ({ payload, active }) => {
 
 export function ChartNextDays()  { //
   const array:Object[] = []
+  var entry:number = 0
+
     const forecastQuery = useQuery({
       queryFn: () =>
           fetch(`https://api.open-meteo.com/v1/forecast?latitude=${localStorage.getItem('latitude')}&longitude=${localStorage.getItem('longitude')}&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin`).then((res) =>
@@ -35,39 +37,50 @@ export function ChartNextDays()  { //
         date : string
         Temperature:Number
         constructor (i:number){
-          this.date = `${new Date(data.hourly.time[i]).getHours()}:00`;
-          this.Temperature = Math.round(data.hourly.temperature_2m[i]);
+          let sum:number = 0
+          for(let i=entry;i<entry+24;i++) {//approved
+            sum+=data.hourly.temperature_2m[i]
+            console.log('current entry point : ',entry)
+          }
+          entry+=24;
+          console.log('current i : ',i,'entry : ',entry,'corresponding date : ',new Date(data.hourly.time[entry]).getDate())
+          this.date = `${new Date(data.hourly.time[entry]).getDate()}`;
+          
+          this.Temperature = Math.round(sum/24);
         }
       } 
 
       const data = forecastQuery.data
       //get days
 
-      for(let i = new Date().getHours();i<new Date().getHours()+7;i++) { //gets current hour +7 musst be bigger than i for the loop to remain
-        array.push(new ChartObject(i)) //push new Object
+      for(let i  = 0;i<7;i++) { //schleife läuft 7 tag 
+        array.push(new ChartObject(i)) 
+        }
+      entry=0
+        return (
+          <>
+          <Card>
+            <Title className="text-3xl font-extrabold text-neutral-300">next hours</Title>
+            <AreaChart
+              className="h-72 mt-4"
+              data={array}
+              index="date"
+              categories={["Temperature"]}
+              colors={["blue"]}
+              yAxisWidth={30}
+              customTooltip={customTooltip}
+              showAnimation={true}
+            />
+          </Card>
+        </>
+        )
       }
       return (
-        <>
-        <Card>
-          <Title className="text-3xl font-extrabold text-neutral-300">next hours</Title>
-          <AreaChart
-            className="h-72 mt-4"
-            data={array}
-            index="date"
-            categories={["Temperature"]}
-            colors={["blue"]}
-            yAxisWidth={30}
-            customTooltip={customTooltip}
-            showAnimation={true}
-          />
-        </Card>
-      </>
+        <Loader/>
       )
+
     }
-  return (
-    <Loader/>
-  )
+
 
   
 
-};

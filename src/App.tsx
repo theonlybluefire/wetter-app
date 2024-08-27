@@ -5,6 +5,7 @@ import './App.css';
 import { FirstContainer } from './components/FirstContainer';
 import { ChartNextHours } from './components/NextHours';
 import { Geocoding } from './components/Geocoding';
+import { ChartNextDays } from './components/NextDays';
 function App() {
   if(!localStorage.getItem('longitude') && !localStorage.getItem('latitude')) { //what to do if location isn't in the local storage
     localStorage.setItem('longitude','13.41')
@@ -32,8 +33,12 @@ function App() {
           <div className='w-full'>
             <ChartNextHours/>
           </div>
+          <div className='w-full'>
+            <ChartNextDays/>
+          </div>
         </div>
       </div>
+      <div className='placeholder h-16'></div>
       <div> 
           <Geocoding/>
       </div>
