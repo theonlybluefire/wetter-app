@@ -20,7 +20,7 @@ const customTooltip = ({ payload, active }) => {
   );
 };
 
-export function ChartNextDays()  { //
+export function ChartNextDays()  { 
   const array:Object[] = []
   var entry:number = 0
 
@@ -38,22 +38,21 @@ export function ChartNextDays()  { //
         Temperature:Number
         constructor (i:number){
           let sum:number = 0
-          for(let i=entry;i<entry+24;i++) {//approved
+          for(let i=entry;i<entry+24;i++) {
             sum+=data.hourly.temperature_2m[i]
-            console.log('current entry point : ',entry)
+            console.log('current entry point : ',entry, 'corresponding value / temp', data.hourly.temperature_2m[i], 'current i', i)
           }
-          entry+=24;
           console.log('current i : ',i,'entry : ',entry,'corresponding date : ',new Date(data.hourly.time[entry]).getDate())
           this.date = `${new Date(data.hourly.time[entry]).getDate()}`;
           
           this.Temperature = Math.round(sum/24);
+          entry+=24;
         }
       } 
 
-      const data = forecastQuery.data
+      const data = forecastQuery.data //set data
       //get days
-
-      for(let i  = 0;i<7;i++) { //schleife läuft 7 tag 
+      for(let i= 0;i<7;i++) { 
         array.push(new ChartObject(i)) 
         }
       entry=0
