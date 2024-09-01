@@ -108,8 +108,8 @@ export function Geocoding() {
               whileFocus={{ scale: 0.9 }}
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
-              className='w-2/3 z-50 p-3 rounded-xl bg-dark-blue text-smooth-white font-bold'
-              placeholder="Where's your location"
+              className='w-2/3 z-50 p-3 rounded-xl bg-zinc-900 text-smooth-white font-bold'
+              placeholder="Where are you currently"
             />
             <motion.button
               exit={{y:50}}
@@ -118,7 +118,7 @@ export function Geocoding() {
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.01 }}
               type='submit'
-              className='w-1/4 bg-dark-blue z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
+              className='w-1/4 bg-zinc-900 z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
             >
               Submit
             </motion.button>
