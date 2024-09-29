@@ -5,6 +5,7 @@ export function FirstContainer ()  {//main func
   //var def
   const [temp, setTemp] = useState<number>();
   const [status, setStatus] = useState<string>();
+  const [classesTemp, setClassesTemp] = useState<string>('grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl');
 
   const forecastQuery = useQuery({ //forecast Query
     queryFn: () =>
@@ -16,8 +17,25 @@ export function FirstContainer ()  {//main func
 
   useEffect(() => { //process query data
     if(forecastQuery.data) {
-      setTemp(Math.round(forecastQuery.data.current.temperature_2m))
-      console.log('First Container forecraft Query Container',forecastQuery.data)
+      setTemp(Math.round(forecastQuery.data.current.temperature_2m));
+      console.log('First Container forecraft Query Container',forecastQuery.data);
+      if(temp<0) {
+        setClassesTemp('grid w-1/3 items-center text-center bg-cyan-300 h-32 rounded-3xl')
+      }
+      if(temp<15) {
+        setClassesTemp('grid w-1/3 items-center text-center bg-cyan-800 h-32 rounded-3xl')
+      }
+      else if (temp>15 && temp <24) {
+        setClassesTemp('grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl')
+      }
+      else if(temp >24 && temp<30) {
+        setClassesTemp('grid w-1/3 items-center text-center bg-red-400 h-32 rounded-3xl')
+      }
+      else if (temp>30) {
+        setClassesTemp('grid w-1/3 items-center text-center bg-red-700 h-32 rounded-3xl')
+      }
+
+
       if (forecastQuery.data.current.rain > 0 || forecastQuery.data.current.snowfall !> 0 || forecastQuery.data.current.showers !>0) {
         setStatus('rainy')
       }
@@ -51,7 +69,7 @@ export function FirstContainer ()  {//main func
     }
   return ( 
 <div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 ">
-  <div className="grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl">
+  <div className={classesTemp}>
     <h1 className="font-extrabold text-white text-4xl">{temp} °C</h1>
   </div>
   <div className="grid grow items-center text-center h-32 rounded-3xl bg-normal-grey">

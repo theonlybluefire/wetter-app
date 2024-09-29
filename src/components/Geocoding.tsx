@@ -99,7 +99,7 @@ export function Geocoding() {
         inputFormSubmittedRef.current = true
       }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
-          <motion.div className='bg-dark-blue/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'
+          <motion.div className='bg-slate-600/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'
             exit={{y:50}}
             animate={{y:0}}
             initial={{y:50}}>
@@ -108,7 +108,7 @@ export function Geocoding() {
               whileFocus={{ scale: 0.9 }}
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
-              className='w-2/3 z-50 p-3 rounded-xl bg-dark-blue text-smooth-white font-bold'
+              className='w-2/3 z-50 p-3 rounded-xl bg-zinc-900 text-smooth-white font-bold'
               placeholder="Where's your location"
             />
             <motion.button
@@ -118,7 +118,7 @@ export function Geocoding() {
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.01 }}
               type='submit'
-              className='w-1/4 bg-dark-blue z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
+              className='w-1/4 bg-zinc-900 z-10 h-12 text-smooth-white font-bold z-50 rounded-xl'
             >
               Submit
             </motion.button>
@@ -142,7 +142,7 @@ export function Geocoding() {
                 transition={{duration:0.3}}>
                 <motion.div  whileHover={{scale:1.1,cursor: 'grab'}} 
                   whileTap={{scale:0.9,cursor:'grabbing'}}
-                  className='md:w-1/2 w-full rounded-3xl h-20 bg-dark-blue z-0 p-5' 
+                  className='md:w-1/2 w-full rounded-3xl h-20 bg-zinc-900 z-0 p-5' 
                   onClick={() => {setShowCloseButton(false);
                     classesResultsDivRef.current=null;
                     window.localStorage.setItem('longitude',item.longitude);
@@ -169,7 +169,7 @@ export function Geocoding() {
                 animate={{opacity:1,y:[10,0,]}}
                 exit={{opacity:0,y:[10,-100] }}
                 whileTap={{scale:0.7}}
-                className='absolute top-0 right-0 bg-red-900 z-50 p-3 rounded-xl m-4'
+                className='fixed top-0 right-0 bg-red-900 z-50 p-3 rounded-xl m-4'
                 onTap={() => {setShowInput(true);setNoResults(false);setResultsWrapperClasses(true)}}
               >Close
               </motion.button>
