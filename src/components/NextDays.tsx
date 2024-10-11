@@ -12,7 +12,7 @@ const customTooltip = ({ payload, active }) => {
           <div className={`w-1 flex flex-col bg-${category.color}-500 rounded`} />
           <div className="space-y-1">
             <p className="text-tremor-content">{category.dataKey}</p>
-            <p className="font-medium text-tremor-content-emphasis">{category.value} Celsius</p>  
+            <p className="font-medium text-tremor-content-emphasis">{category.value}</p>  
           </div>
         </div>
       ))}
@@ -36,38 +36,39 @@ export function ChartNextDays()  {
       class ChartObject {
         date : string
         Temperature:Number
-        PrecipationProb:number
+        "Precipation Probability":number
         constructor (i:number){
-          let sumTemp:number = 0
-          let sumPrec:number = 0
+          let sumTemp:number = 0;
+          let sumPrec:number = 0;
           for(let i=entry;i<entry+24;i++) {
             sumTemp+=data.hourly.temperature_2m[i]
             sumPrec+=data.hourly.precipitation_probability[i]
           }
           this.date = `${new Date(data.hourly.time[entry]).getDate()}`;
           this.Temperature = Math.round(sumTemp/24);
-          this.PrecipationProb = Math.round(sumPrec/24)
+          this["Precipation Probability"] = Math.round(sumPrec/24);
           entry+=24;
         }
       } 
 
       const data = forecastQuery.data //set data
       //get days
+      entry=0
       for(let i= 0;i<7;i++) { 
         array.push(new ChartObject(i)) 
         }
       console.log('finished data array', array)
-      entry=0
+      
         return (
           <>
           <Card>
-            <Title className="text-3xl font-extrabold text-neutral-300">next hours</Title>
+            <Title className="text-3xl font-extrabold text-neutral-300">next days</Title>
             <AreaChart
               className="h-72 mt-4"
               data={array}
               index="date"
-              categories={["Temperature","PrecipationProb"]}
-              colors={["blue"]}
+              categories={["Temperature","Precipation Probability"]}
+              colors={["blue","green"]}
               yAxisWidth={30}
               customTooltip={customTooltip}
               showAnimation={true}

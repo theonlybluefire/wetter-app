@@ -1,7 +1,6 @@
 import { AreaChart, Card, Title } from "@tremor/react";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "./Loader";
 
 const customTooltip = ({ payload, active }) => {
   if (!active || !payload) return null;
@@ -12,7 +11,7 @@ const customTooltip = ({ payload, active }) => {
           <div className={`w-1 flex flex-col bg-${category.color}-500 rounded`} />
           <div className="space-y-1">
             <p className="text-tremor-content">{category.dataKey}</p>
-            <p className="font-medium text-tremor-content-emphasis">{category.value} Celsius</p>  
+            <p className="font-medium text-tremor-content-emphasis">{category.value}</p>  
           </div>
         </div>
       ))}
@@ -33,11 +32,13 @@ export function ChartNextHours()  {
     if(forecastQuery.data ) {
       console.log(forecastQuery.data.hourly)
       class ChartObject {
-        date : string
-        Temperature:Number
+        date : string;
+        Temperature:Number;
+        "Precipation Probability":number
         constructor (i:number){
           this.date = `${new Date(data.hourly.time[i]).getHours()}:00`;
           this.Temperature = Math.round(data.hourly.temperature_2m[i]);
+          this["Precipation Probability"] = Math.round(data.hourly.precipitation_probability[i]);
         }
       } 
 
@@ -53,8 +54,8 @@ export function ChartNextHours()  {
             className="h-72 mt-4"
             data={array}
             index="date"
-            categories={["Temperature"]}
-            colors={["blue"]}
+            categories={["Temperature","Precipation Probability"]}
+            colors={["blue",'green']}
             yAxisWidth={30}
             customTooltip={customTooltip}
             showAnimation={true}

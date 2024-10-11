@@ -58,7 +58,6 @@ export function Geocoding() {
     }
   },[results])
 
-
   useEffect(() => {
     if (geocodingQuery.data && geocodingQuery.data.results && inputFormSubmittedRef.current===true) { //results+form submit case
       console.log('settings results')
