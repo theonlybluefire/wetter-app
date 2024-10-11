@@ -109,7 +109,7 @@ export function Geocoding() {
               type="text"
               onChange={(event) => { inputRef.current = event.target.value; }}
               className='w-2/3 z-50 p-3 rounded-xl bg-zinc-900 text-smooth-white font-bold'
-              placeholder="Where's your location"
+              placeholder="Where are you currently"
             />
             <motion.button
               exit={{y:50}}

@@ -36,16 +36,17 @@ export function ChartNextDays()  {
       class ChartObject {
         date : string
         Temperature:Number
+        PrecipationProb:number
         constructor (i:number){
-          let sum:number = 0
+          let sumTemp:number = 0
+          let sumPrec:number = 0
           for(let i=entry;i<entry+24;i++) {
-            sum+=data.hourly.temperature_2m[i]
-            console.log('current entry point : ',entry, 'corresponding value / temp', data.hourly.temperature_2m[i], 'current i', i)
+            sumTemp+=data.hourly.temperature_2m[i]
+            sumPrec+=data.hourly.precipitation_probability[i]
           }
-          console.log('current i : ',i,'entry : ',entry,'corresponding date : ',new Date(data.hourly.time[entry]).getDate())
           this.date = `${new Date(data.hourly.time[entry]).getDate()}`;
-          
-          this.Temperature = Math.round(sum/24);
+          this.Temperature = Math.round(sumTemp/24);
+          this.PrecipationProb = Math.round(sumPrec/24)
           entry+=24;
         }
       } 
@@ -55,6 +56,7 @@ export function ChartNextDays()  {
       for(let i= 0;i<7;i++) { 
         array.push(new ChartObject(i)) 
         }
+      console.log('finished data array', array)
       entry=0
         return (
           <>
@@ -64,7 +66,7 @@ export function ChartNextDays()  {
               className="h-72 mt-4"
               data={array}
               index="date"
-              categories={["Temperature"]}
+              categories={["Temperature","PrecipationProb"]}
               colors={["blue"]}
               yAxisWidth={30}
               customTooltip={customTooltip}
