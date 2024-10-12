@@ -52,7 +52,7 @@ export function FirstContainer ()  {//main func
         setStatus('night')
       }
     }
-    },[forecastQuery])
+    },[forecastQuery,temp])
 
     if(forecastQuery.isLoading) { //loading case
       return (
