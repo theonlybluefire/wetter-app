@@ -23,7 +23,7 @@ export function ChartNextHours()  {
   const array:Object[] = []
     const forecastQuery = useQuery({
       queryFn: () =>
-          fetch(`https://api.open-meteo.com/v1/forecast?latitude=${localStorage.getItem('latitude')}&longitude=${localStorage.getItem('longitude')}&current=temperature_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe%2FBerlin`).then((res) =>
+          fetch(`https://api.open-meteo.com/v1/forecast?latitude=${localStorage.getItem('latitude')}&longitude=${localStorage.getItem('longitude')}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,wind_speed_80m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&timezone=Europe%2FBerlin`).then((res) =>
               res.json(),
           ),
       queryKey: ['forecastData',localStorage.getItem('latitude'),localStorage.getItem('longitude')]
@@ -34,8 +34,10 @@ export function ChartNextHours()  {
       class ChartObject {
         date : string;
         Temperature:Number;
-        "Precipation Probability":number
+        Windspeed:Number;
+        "Precipation Probability":number;
         constructor (i:number){
+          this.Windspeed = Math.round(data.hourly.wind_speed_80m[i])
           this.date = `${new Date(data.hourly.time[i]).getHours()}:00`;
           this.Temperature = Math.round(data.hourly.temperature_2m[i]);
           this["Precipation Probability"] = Math.round(data.hourly.precipitation_probability[i]);
@@ -54,8 +56,8 @@ export function ChartNextHours()  {
             className="h-72 mt-4"
             data={array}
             index="date"
-            categories={["Temperature","Precipation Probability"]}
-            colors={["blue",'green']}
+            categories={["Temperature","Precipation Probability","Windspeed"]}
+            colors={["blue",'green','yellow']}
             yAxisWidth={30}
             customTooltip={customTooltip}
             showAnimation={true}
