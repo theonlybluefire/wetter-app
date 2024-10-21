@@ -68,12 +68,23 @@ export function FirstContainer ()  {//main func
       )
     }
   return ( 
-<div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 ">
+<div className="flex gap-5 p-5 rounded-3xl bg-dark-blue/40 zIndexMinusTwo">
   <div className={classesTemp}>
     <h1 className="font-extrabold text-white text-4xl">{temp} °C</h1>
   </div>
   <div className="grid grow items-center text-center h-32 rounded-3xl bg-normal-grey">
-    <h1 className="font-extrabold text-white text-4xl">{status}</h1>
+    <h1 className="FirstContainerTestClass font-extrabold text-white text-4xl">{status}</h1>
+    {[...Array(1)].map((_, index) => (
+              <div key={index} className={`lanternX${index + 1}`}>
+                <img
+                  className={`lanternY${index + 1}`}
+                  src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3522775/LanternsLarge.png"
+                  alt={`Lantern ${index + 1}`}
+                />
+              </div>
+            ))}
+
+    
   </div>
 </div>
 
