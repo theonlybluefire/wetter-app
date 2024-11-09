@@ -31,7 +31,7 @@ export function Geocoding() {
     if(results) { //results ? then activate the classes of the results and no results container
       setResultsWrapperClasses(true);
       //log results
-      console.log({results})
+      console.log({results});
     }
     if (!results && inputFormSubmittedRef.current===false) {
         console.log('unset wrapper classes')

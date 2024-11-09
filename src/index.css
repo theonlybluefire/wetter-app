@@ -28,7 +28,7 @@ FirstContainerClassTest {
   background: #ece8fc;
 }
 
-.pill {
+/*.pill {
   position: relative;
   width: 335px;
   height: 160px;
@@ -72,3 +72,4 @@ FirstContainerClassTest {
   50% { transform: translateY(-200px); }
   100% { transform: translateY(-400px); }
 }
+*/

@@ -42,7 +42,6 @@ function App() {
       <div> 
           <Geocoding/>
       </div>
-      
       <div className="container">
       <div className="container__elements">
         <div className="pill">
@@ -51,7 +50,6 @@ function App() {
           </div>
         </div>
       </div>
-
     </div>
     </>
   );
