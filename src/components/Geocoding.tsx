@@ -86,6 +86,11 @@ export function Geocoding() {
 
   }
 
+  function inputFocus() {
+    console.log("Geocoding input in focus")
+    setNoResults(true)
+  }
+
 
   return (
     <>
@@ -106,6 +111,7 @@ export function Geocoding() {
             
               whileFocus={{ scale: 0.9 }}
               type="text"
+              onFocus={() => inputFocus()}
               onChange={(event) => { inputRef.current = event.target.value; }}
               className='w-2/3 z-50 p-3 rounded-xl bg-zinc-900 text-smooth-white font-bold'
               placeholder="Where are you currently"
@@ -155,13 +161,17 @@ export function Geocoding() {
             ))}
             {noResults && 
             <div>
-              <p>NO RESULTS</p> {/* just to have a visual to see if it's actualy being triggerd*/}
-
               <motion.div
+                className='grid backdrop-blur-sm place-content-center grid-cols-2 gap-4'
+                style={{ width:'100vw',height:'100vh'}}
                 initial={{y:window.innerHeight,scale:0.2,overflow:'hidden'}} 
                 animate={{y:0,scale:1}} 
                 exit={{y:window.innerHeight,scale:0.2,overflow:'hidden'}}
-                >
+              >
+                <div className='bg-zinc-900 w-1/2 h-1/3 '>
+
+                </div>
+
               </motion.div>
               <motion.button 
                 initial={{opacity:0,y:-100}}
