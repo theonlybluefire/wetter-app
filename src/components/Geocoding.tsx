@@ -16,6 +16,15 @@ export function Geocoding() {
   const queryClient = useQueryClient(); //Query Client
   const inputFormSubmittedRef = useRef<boolean>(false);
   const [noResults, setNoResults] = useState<boolean>(false);
+  const [searchTooltipText, setSearchToolTipText] = useState<string>('Do not show again');
+  let searchTooltipPreferences = window.localStorage.getItem('searchTooltipPreferences');
+  console.log(searchTooltipPreferences)
+  useEffect(() => {
+    if(searchTooltipPreferences=='false') {
+      setSearchToolTipText('show me')
+    }
+  },[])
+ 
 
 
   const geocodingQuery = useQuery({ //geocoding query
@@ -86,9 +95,21 @@ export function Geocoding() {
 
   }
 
-  function inputFocus() {
-    console.log("Geocoding input in focus")
-    setNoResults(true)
+  function inputFocus(focus:boolean) {
+    let preference = window.localStorage.getItem('searchTooltipPreferences')
+
+    if(focus && preference!='false') {
+      setShowInput(true);
+      setNoResults(true);
+      setResultsWrapperClasses(true);
+    }
+    else  if(preference!='false'){
+      setNoResults(false);
+    }
+
+    else {
+
+    }
   }
 
 
@@ -96,22 +117,24 @@ export function Geocoding() {
     <>
     <AnimatePresence>
       {showInput && 
-       <form onSubmit={(event) => {
+      <form onSubmit={(event) => {
         queryClient.resetQueries({ queryKey: ['geocodingQuery', location] })
         event.preventDefault();
+        setNoResults(false);
         setLocation(inputRef.current || null);
         inputFormSubmittedRef.current = true
-      }}>
+        }}>
         <div className='fixed bottom-0 right-0 left-0 md:py-4 py-1 flex md:justify-center z-50'>
           <motion.div className='bg-slate-600/40 md:w-2/3 w-full h-16 rounded-xl flex justify-center items-center space-x-2 md:space-x-10'
             exit={{y:50}}
             animate={{y:0}}
             initial={{y:50}}>
             <motion.input
-            
+
               whileFocus={{ scale: 0.9 }}
               type="text"
-              onFocus={() => inputFocus()}
+              onBlur={() => inputFocus(false)}
+              onFocus={() => inputFocus(true)}
               onChange={(event) => { inputRef.current = event.target.value; }}
               className='w-2/3 z-50 p-3 rounded-xl bg-zinc-900 text-smooth-white font-bold'
               placeholder="Where are you currently"
@@ -159,32 +182,44 @@ export function Geocoding() {
                 </motion.div>
              </motion.div>
             ))}
-            {noResults && 
+
             <div>
+            {noResults && 
+
               <motion.div
-                className='grid backdrop-blur-sm place-content-center grid-cols-2 gap-4'
+                className=' backdrop-blur-sm w-full h-full grid grid-cols-1 justify-items-center p-8'
                 style={{ width:'100vw',height:'100vh'}}
                 initial={{y:window.innerHeight,scale:0.2,overflow:'hidden'}} 
                 animate={{y:0,scale:1}} 
                 exit={{y:window.innerHeight,scale:0.2,overflow:'hidden'}}
               >
-                <div className='bg-zinc-900 w-1/2 h-1/3 '>
-
+                <div className='bg-zinc-900 w-1/2 h-1/3 grid grid-cols-1 justify-items-center p-8 rounded-3xl'>
+                  <h1 className="font-extrabold text-white text-4xl w-full">Let's search something</h1>
+                  <p className="w-full text-white">Type in your location and we'll show you the current weather</p>
                 </div>
-
               </motion.div>
+              }
+              { noResults && searchTooltipText=='show me' &&
               <motion.button 
                 initial={{opacity:0,y:-100}}
                 animate={{opacity:1,y:[10,0,]}}
                 exit={{opacity:0,y:[10,-100] }}
                 whileTap={{scale:0.7}}
                 className='fixed top-0 right-0 bg-red-900 z-50 p-3 rounded-xl m-4'
-                onTap={() => {setShowInput(true);setNoResults(false);setResultsWrapperClasses(true)}}
-              >Close
+                onTap={() => {
+                  if(searchTooltipText == 'show me') {
+                    localStorage.removeItem('searchTooltipPreferences')
+                  }
+                  else {
+                    localStorage.setItem('searchTooltipPreferences', 'false')
+                  }
+                  
+                }}
+              >{searchTooltipText}
               </motion.button>
-            </div>
+           
             }
-
+            </div>
 
           </AnimatePresence>
         </motion.div>
