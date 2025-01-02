@@ -83,11 +83,13 @@ export function Geocoding() {
       setResults(geocodingQuery.data.results);
       inputFormSubmittedRef.current = false;
     }
-    else if(typeof geocodingQuery?.data?.results == 'undefined') {
-      console.log('TEST', typeof geocodingQuery?.data?.results, geocodingQuery, results, inputFormSubmittedRef.current)
-      inputFocus()
+    else if(typeof geocodingQuery?.data?.results == 'undefined' && !geocodingQuery.isLoading) { // no results case
+      console.log('no Results case', typeof geocodingQuery?.data?.results, geocodingQuery, results, inputFormSubmittedRef.current)
+      setResultsWrapperClasses(true);
+      inputFocus(true)
+
     }
-    else if (geocodingQuery.isError || geocodingQuery.error) {
+    else if (geocodingQuery.isError || geocodingQuery.error) { //error case
       console.error('[ERROR] geocoding.tsx', geocodingQuery.isError, geocodingQuery.error);
     }
   }, [results, geocodingQuery.data, location])
@@ -96,26 +98,11 @@ export function Geocoding() {
     return (<Loader />)
   }
 
-  /* currently not working
-  if (geocodingQuery.data && !geocodingQuery.data.results && inputFormSubmittedRef.current === true) { //no results case
-    console.log('no results, current varibales ', noResults, '<- No Reults', showInput, '<- showInput', setResultsWrapperClasses, '<- results wrapper classes')
-    setNoResults(true)
-    setShowInput(false)
-    setResultsWrapperClasses(true)
-    console.warn('No results')
-    console.log('no results, laest varibales after change ', noResults, '<- No Reults', showInput, '<- showInput', showResultsWrapperClasses, '<- results wrapper classes')
-    inputFormSubmittedRef.current = false;
-
-  }*/
-
-
-
-  //under development -- 
   function inputFocus(focus?: boolean) {
+    
     let preference = window.localStorage.getItem('preferenceShowSearchTooltip')
-
+    console.log('INPUT FOCUS function triggered with focus = ',focus,'and preference show search tooltip being', preference,searchTooltipText)
     if (focus) { //input focused
-      
       if (preference == 'true') {
         setNoResults(true)
       }
@@ -127,13 +114,16 @@ export function Geocoding() {
       setResultsWrapperClasses(true);
     }
     else if (typeof focus == 'undefined') { //button clicked case
+      console.log('test01')
       if (searchTooltipText == '1') { //button clicked -> do not show extra tooltip 
+        console.log('test02')
         window.localStorage.setItem('preferenceShowSearchTooltip', 'true');
         setNoResults(false);
         setShowSearchTooltip(false);
         setSearchToolTipText('2');
       }
       else { //button clicked -> show extra tooltip 
+        console.log('test03')
         window.localStorage.setItem('preferenceShowSearchTooltip', 'false');
         setNoResults(false);
         setShowSearchTooltip(false)
@@ -149,10 +139,6 @@ export function Geocoding() {
       }, 250)
     }
   }
-  //--- 
-
-
-
 
   return (
     <>
@@ -250,8 +236,8 @@ export function Geocoding() {
                   exit={{ scale: 0, overflow: 'hidden', y: window.innerHeight }}
                 >
                   <div className='bg-zinc-900 w-1/2 h-1/3 grid grid-cols-1 justify-items-center p-8 rounded-3xl'>
-                    <h1 className="font-extrabold text-white text-4xl w-full">Nothing to see here</h1>
-                    <p className="w-full text-white">Type something and let's find out if I can find your location</p>
+                    <h1 className="font-extrabold text-white text-4xl w-full">no results</h1>
+                    <p className="w-full text-white">pssttt ! if do not want to see me, press the eye button</p>
                   </div>
                 </motion.div>
               }
