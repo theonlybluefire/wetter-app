@@ -192,7 +192,7 @@ export function Geocoding() {
             exit={{ opacity: 0, y: [10, 100] }}
             whileTap={{ scale: 0.7 }}
             style={{ zIndex: 100 }}
-            className='fixed left-2 md:bottom-2 top-2 bg-red-900 p-3 rounded-xl m-4 z-50'
+            className='fixed left-2 sm:top-2 bg-red-900 p-3 rounded-xl m-4 z-50'
             onTap={() => inputFocus()}
           >
             {searchTooltipText == '1' &&
