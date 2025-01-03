@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader } from './Loader';
 import { useQueryClient } from '@tanstack/react-query';
+import { BlobOptions } from 'buffer';
 
 export function Geocoding() {
 
@@ -62,15 +63,16 @@ export function Geocoding() {
   }
 
   function manageInputAndCloseButton() {
-    if (results) { //when results show closebutton and hide Input
+    if (results) { //when results : show closebutton and hide Input
       setShowCloseButton(true)
       setShowInput(false)
     }
-    else if (!results) { //when no results, not show close button and show Input
+    else if (!results) { //when no results :  not show close button and show Input
+      setShowSearchTooltip(false)
       setShowCloseButton(false)
       setShowInput(true)
     }
-    else { //else not show Close button and show input
+    else { //else : not show Close button and show input
       setShowCloseButton(false)
       setShowInput(true)
     }
@@ -79,19 +81,25 @@ export function Geocoding() {
   useEffect(() => {
     manageWrapperClasses()
     manageInputAndCloseButton()
-    if (geocodingQuery?.data?.results && inputFormSubmittedRef.current === true) { //results+form submit case
+    console.log('submitRef',inputFormSubmittedRef.current)
+     if (geocodingQuery?.data?.results && inputFormSubmittedRef.current === true) { //results+form submit case
       setResults(geocodingQuery.data.results);
+      console.log('setting submit')
       inputFormSubmittedRef.current = false;
     }
-    else if(typeof geocodingQuery?.data?.results == 'undefined' && !geocodingQuery.isLoading) { // no results case
+    else if(typeof geocodingQuery?.data?.results == 'undefined' && !geocodingQuery.isLoading && inputFormSubmittedRef.current === true) { // no results case
+      setResults(null)
       console.log('no Results case', typeof geocodingQuery?.data?.results, geocodingQuery, results, inputFormSubmittedRef.current)
       setResultsWrapperClasses(true);
-      inputFocus(true)
-
+      setShowCloseButton(true)
+      inputFocus(true);
+      inputFormSubmittedRef.current = false;
     }
+
     else if (geocodingQuery.isError || geocodingQuery.error) { //error case
       console.error('[ERROR] geocoding.tsx', geocodingQuery.isError, geocodingQuery.error);
     }
+    
   }, [results, geocodingQuery.data, location])
 
   if (geocodingQuery.isLoading) { //loading case
@@ -184,7 +192,7 @@ export function Geocoding() {
             exit={{ opacity: 0, y: [10, 100] }}
             whileTap={{ scale: 0.7 }}
             style={{ zIndex: 100 }}
-            className='fixed left-2 bottom-2 bg-red-900  p-3 rounded-xl m-4 z-50'
+            className='fixed left-2 md:bottom-2 top-2 bg-red-900 p-3 rounded-xl m-4 z-50'
             onTap={() => inputFocus()}
           >
             {searchTooltipText == '1' &&
@@ -257,7 +265,7 @@ export function Geocoding() {
               animate={{ opacity: 1, y: [10, 0,] }}
               exit={{ opacity: 0, y: [10, -100] }}
               whileTap={{ scale: 0.7 }}
-              onTap={() => { setResults(null) }}
+              onTap={() => {setResults(undefined)}}
               className='absolute top-0 right-0 bg-red-900 p-3 rounded-xl m-4 z-50'>Close
             </motion.button>}
           </AnimatePresence>
