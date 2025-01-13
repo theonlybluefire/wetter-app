@@ -21,18 +21,23 @@ export function FirstContainer ()  {//main func
       console.log('First Container forecraft Query Container',forecastQuery.data);
       if(temp<0) {
         setClassesTemp('grid w-1/3 items-center text-center bg-cyan-300 h-32 rounded-3xl')
+        window.sessionStorage.setItem('tempColor','text-cyan-300')
       }
       if(temp<15) {
         setClassesTemp('grid w-1/3 items-center text-center bg-cyan-800 h-32 rounded-3xl')
+        window.sessionStorage.setItem('tempColor','text-cyan-800')
       }
       else if (temp>15 && temp <24) {
         setClassesTemp('grid w-1/3 items-center text-center bg-blue-700 h-32 rounded-3xl')
+        window.sessionStorage.setItem('tempColor','text-blue-700')
       }
       else if(temp >24 && temp<30) {
         setClassesTemp('grid w-1/3 items-center text-center bg-red-400 h-32 rounded-3xl')
+        window.sessionStorage.setItem('tempColor','text-red-400')
       }
       else if (temp>30) {
         setClassesTemp('grid w-1/3 items-center text-center bg-red-700 h-32 rounded-3xl')
+        window.sessionStorage.setItem('tempColor','text-red-700')
       }
       if (forecastQuery.data.current.rain > 0 || forecastQuery.data.current.snowfall !> 0 || forecastQuery.data.current.showers !>0) {
         setStatus('rainy')
