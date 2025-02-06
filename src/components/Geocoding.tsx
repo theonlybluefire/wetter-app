@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useForceUpdate } from "framer-motion"
 import { Loader } from './Loader';
 import { useQueryClient } from '@tanstack/react-query';
 import { BlobOptions } from 'buffer';
@@ -21,7 +21,7 @@ export function Geocoding() {
   const [searchTooltipText, setSearchToolTipText] = useState<string>('2');
   const [showSearchTooltip, setShowSearchTooltip] = useState<boolean>(false);
   const [tempColor, setTempColor] = useState<string>()
-
+  const [update, setUpdate] = useState<boolean>(); //use to execute useEffect statement below
 
   const queryClient = useQueryClient(); //Query Client
   const geocodingQuery = useQuery({ //geocoding query
@@ -79,6 +79,7 @@ export function Geocoding() {
   }
 
   useEffect(() => {
+   
     manageWrapperClasses()
     manageInputAndCloseButton();
     setTempColor(window.sessionStorage.getItem('tempColor'));
@@ -91,18 +92,17 @@ export function Geocoding() {
     }
     else if (typeof geocodingQuery?.data?.results == 'undefined' && !geocodingQuery.isLoading && inputFormSubmittedRef.current === true) { // no results case
       setResults(null)
-      console.log('no Results case', typeof geocodingQuery?.data?.results, geocodingQuery, results, inputFormSubmittedRef.current)
       setResultsWrapperClasses(true);
       setShowCloseButton(true)
       inputFocus(true);
-      inputFormSubmittedRef.current = false;
+      inputFormSubmittedRef.current = false; //TODO: forgot to set something 
     }
 
     else if (geocodingQuery.isError || geocodingQuery.error) { //error case
       console.error('[ERROR] geocoding.tsx', geocodingQuery.isError, geocodingQuery.error);
     }
 
-  }, [results, geocodingQuery.data, location])
+  }, [results, geocodingQuery.data, location, update])
 
   if (geocodingQuery.isLoading) { //loading case
     return (<Loader />)
@@ -203,7 +203,7 @@ export function Geocoding() {
               </svg>
             }
             {searchTooltipText == '2' &&
-              <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+               <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                 <path d="M3.27489 15.2957C2.42496 14.1915 2 13.6394 2 12C2 10.3606 2.42496 9.80853 3.27489 8.70433C4.97196 6.49956 7.81811 4 12 4C16.1819 4 19.028 6.49956 20.7251 8.70433C21.575 9.80853 22 10.3606 22 12C22 13.6394 21.575 14.1915 20.7251 15.2957C19.028 17.5004 16.1819 20 12 20C7.81811 20 4.97196 17.5004 3.27489 15.2957Z" stroke="#D4D4CC" stroke-width="1.5" />
                 <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="#D4D4CC" stroke-width="1.5" />
               </svg>
@@ -296,7 +296,7 @@ export function Geocoding() {
               animate={{ opacity: 1, y: [10, 0,] }}
               exit={{ opacity: 0, y: [10, -100] }}
               whileTap={{ scale: 0.7 }}
-              onTap={() => { setResults(undefined) }}
+              onTap={() => { setResults(null);setUpdate(!update) }}
               className='absolute top-0 right-0 bg-red-900 p-3 rounded-xl m-4 z-50'>
               <svg width="25px" height="25px" viewBox="-0.5 0 24 24" fill="none">
                 <path d="M3 21.32L21 3.32001" stroke="#242428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
