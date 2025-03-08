@@ -1,4 +1,5 @@
 # 👋 | Intro
+![Header image](image.png)
 This is a simple weather app. I mainly started this project to learn how to handle APIs. 
 Although I tested my project, aspect errors or bugs. 
 I will not continue development !
