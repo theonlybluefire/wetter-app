@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
-//components
+//COMPONENTS
 import { FirstContainer } from './components/FirstContainer';
 import { ChartNextHours } from './components/NextHours';
 import { Geocoding } from './components/Geocoding';
